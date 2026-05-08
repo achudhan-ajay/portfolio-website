@@ -1,0 +1,47 @@
+<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_ii_3365_1919)">
+<g clip-path="url(#clip0_3365_1919)">
+<rect width="110" height="110" rx="26" fill="url(#paint0_linear_3365_1919)"/>
+<g filter="url(#filter1_d_3365_1919)">
+<path d="M55.001 19.25C74.8736 19.25 91.001 35.3774 91.001 55.25C91.001 75.1226 74.8736 91.25 55.001 91.25C35.1284 91.25 19.001 75.1226 19.001 55.25C19.001 35.3774 35.1284 19.25 55.001 19.25ZM70.418 67.5879C60.0535 61.3895 47.9034 61.1577 36.0146 63.7852C34.926 64.0174 34.04 64.7285 34.04 66.2236C34.0401 67.3994 34.926 68.5166 36.334 68.5166C36.755 68.5166 37.4954 68.2848 38.0615 68.1396C48.4696 66.0058 59.0084 66.2382 68.0664 71.6963C68.6323 72.03 69.0097 72.2187 69.6191 72.2188C70.7949 72.2188 71.8261 71.3043 71.8262 69.9834C71.8262 68.6624 71.3035 68.154 70.418 67.5879ZM49.0068 50.4014C42.9681 50.4014 38.8451 51.2427 34.8096 52.375C33.3146 52.796 32.5596 53.8268 32.5596 55.3799C32.5596 56.9331 33.8228 58.1963 35.376 58.1963C36.0292 58.1963 36.4068 58.0071 37.1035 57.8184C49.1373 54.5523 62.6667 56.716 71.7393 62.0869C72.2617 62.3627 72.7698 62.6963 73.5244 62.6963C75.1066 62.6962 76.3263 61.4329 76.3408 59.8652C76.3408 58.6025 75.8759 57.7026 74.7002 57.0059C67.5293 52.7382 58.4277 50.4014 49.0068 50.4014ZM49.7031 38.0332C43.4758 38.0332 37.7561 38.7441 32.6465 40.2393C31.3401 40.6168 30.1211 41.7349 30.1211 43.709C30.1211 45.6395 31.587 47.1345 33.5029 47.1348C34.1997 47.1348 34.8534 46.903 35.376 46.7578C47.3371 43.4191 65.8158 44.8992 76.1514 51.0684C76.8046 51.4458 77.2696 51.6348 78.0244 51.6348C79.7952 51.6347 81.3914 50.2269 81.3916 48.2529C81.3916 46.5255 80.6518 45.6249 79.5195 44.9717C71.405 40.2394 60.2999 38.0332 49.7031 38.0332Z" fill="white"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_ii_3365_1919" x="0" y="0" width="110" height="120.371" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="15.7143" operator="dilate" in="SourceAlpha" result="effect1_innerShadow_3365_1919"/>
+<feOffset dy="70.7143"/>
+<feGaussianBlur stdDeviation="13.0429"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.03 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_3365_1919"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1.57143"/>
+<feGaussianBlur stdDeviation="1.72857"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="effect1_innerShadow_3365_1919" result="effect2_innerShadow_3365_1919"/>
+</filter>
+<filter id="filter1_d_3365_1919" x="0.700977" y="4.95" width="108.6" height="108.6" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="9.15"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3365_1919"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_3365_1919" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_3365_1919" x1="55" y1="0" x2="55" y2="110" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1ED760"/>
+<stop offset="0.5" stop-color="#1ABC54"/>
+<stop offset="1" stop-color="#158A3F"/>
+</linearGradient>
+<clipPath id="clip0_3365_1919">
+<rect width="110" height="110" rx="26" fill="white"/>
+</clipPath>
+</defs>
+</svg>

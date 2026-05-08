@@ -1,0 +1,325 @@
+﻿<!-- INTEREST SECTION -->
+<section id="interest-section" class="section" aria-label="What I'm Into">
+<style>
+#interest-section{background:#0E0F0F;color:#fff;padding:80px 60px 100px;}
+.int-desc{max-width:580px;margin:32px auto 60px;text-align:center;font-family:var(--f-body);font-size:15px;line-height:1.8;color:rgba(255,255,255,0.6);}
+.int-desc p+p{margin-top:20px;}
+.int-modules{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:60px;}
+.int-module{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;}
+.int-label{font-family:var(--f-body);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.int-cta{display:flex;justify-content:center;}
+.int-cta a{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,0.25);border-radius:100px;padding:14px 28px;font-family:var(--f-body);font-size:15px;color:#fff;text-decoration:none;transition:border-color .3s;}
+.int-cta a:hover{border-color:rgba(255,255,255,.6);}
+/* KINDLE */
+.kindle-card{width:168px;height:210px;background:#f0ede8;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s;box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.int-module:hover .kindle-card{transform:translateY(-6px) scale(1.02);}
+.kindle-screen{flex:1;padding:16px 14px 10px;background:#e8e4de;}
+.kindle-screen .k-title{font-family:Georgia,serif;font-size:11px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:8px;}
+.kindle-screen .k-body{font-family:Georgia,serif;font-size:8px;color:#3a3a3a;line-height:1.6;}
+.kindle-bar{height:36px;background:#1a1a1a;display:flex;align-items:center;justify-content:space-between;padding:0 12px;}
+.kindle-bar span{font-size:9px;font-family:var(--f-body);color:rgba(255,255,255,.6);letter-spacing:1px;}
+/* GAMEBOY */
+.gb-card{width:168px;height:218px;background:#9BD423;border-radius:14px 14px 40px 14px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:transform .2s;}
+.int-module:hover .gb-card{transform:translateY(-6px) scale(1.02);}
+.gb-screen-wrap{background:#1a2a1a;border-radius:6px;padding:6px;border:3px solid #111;}
+.gb-screen{width:100%;aspect-ratio:1;background:#0f1f0f;border-radius:3px;display:flex;align-items:center;justify-content:center;}
+.gb-screen span{font-size:9px;font-family:monospace;color:#4aff4a;letter-spacing:1px;}
+.gb-controls{display:flex;align-items:center;justify-content:space-between;padding:0 6px;}
+.gb-dpad{display:grid;grid-template-columns:repeat(3,18px);grid-template-rows:repeat(3,18px);gap:1px;}
+.gb-dpad button{background:#222;border:none;border-radius:3px;color:#9BD423;font-size:8px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.gb-dpad .empty{background:transparent;pointer-events:none;}
+.gb-ab{display:flex;gap:6px;align-items:center;}
+.gb-ab button{width:22px;height:22px;border-radius:50%;background:#e74c3c;border:none;color:#fff;font-size:8px;font-weight:700;cursor:pointer;}
+.gb-ab button:last-child{background:#3498db;}
+.gb-bottom{display:flex;justify-content:center;gap:8px;}
+.gb-bottom button{background:#333;border:none;border-radius:4px;padding:3px 8px;color:#9BD423;font-size:7px;font-family:monospace;cursor:pointer;}
+/* TV */
+.tv-card{width:200px;height:160px;background:#c8c8c8;border-radius:12px;padding:10px;display:flex;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:transform .2s;position:relative;}
+.int-module:hover .tv-card{transform:translateY(-6px) scale(1.02);}
+.tv-antenna{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:2px;height:20px;background:#aaa;}
+.tv-antenna::before,.tv-antenna::after{content:'';position:absolute;bottom:0;width:2px;height:14px;background:#aaa;}
+.tv-antenna::before{transform-origin:bottom center;transform:rotate(-30deg);left:-8px;}
+.tv-antenna::after{transform-origin:bottom center;transform:rotate(30deg);left:8px;}
+.tv-main{flex:1;display:flex;flex-direction:column;gap:6px;}
+.tv-screen-box{flex:1;background:#111;border-radius:6px;overflow:hidden;}
+.tv-screen-box img{width:100%;height:100%;object-fit:cover;}
+.tv-controls{display:flex;align-items:center;justify-content:center;gap:10px;}
+.tv-btn{width:22px;height:18px;background:#999;border:none;border-radius:4px;cursor:pointer;font-size:9px;color:#333;}
+.tv-btn.power{background:#e8780a;border-radius:50%;width:20px;height:20px;color:#fff;}
+.tv-speaker{width:28px;display:flex;flex-direction:column;gap:3px;justify-content:center;}
+.tv-speaker .sp-line{height:2px;background:#aaa;border-radius:1px;}
+/* IPOD */
+.ipod-card{width:168px;height:218px;background:#FF6B1A;border-radius:18px;padding:10px 12px 14px;display:flex;flex-direction:column;gap:6px;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:transform .2s;}
+.int-module:hover .ipod-card{transform:translateY(-6px) scale(1.02);}
+.ipod-art-strip{display:flex;gap:3px;overflow:hidden;border-radius:6px;height:70px;background:#222;}
+.ipod-art-strip img{height:100%;aspect-ratio:1;object-fit:cover;flex-shrink:0;}
+.ipod-track{text-align:center;}
+.ipod-track .i-song{font-size:9px;font-weight:700;color:#fff;font-family:var(--f-body);}
+.ipod-track .i-artist{font-size:8px;color:rgba(255,255,255,.6);font-family:var(--f-body);}
+.ipod-wheel-wrap{flex:1;display:flex;align-items:center;justify-content:center;}
+.ipod-wheel{width:76px;height:76px;border-radius:50%;background:rgba(0,0,0,.25);display:grid;place-items:center;position:relative;}
+.ipod-center{width:28px;height:28px;border-radius:50%;background:#FF6B1A;box-shadow:0 0 0 3px rgba(0,0,0,.2);}
+.ipod-controls{display:flex;justify-content:space-between;align-items:center;padding:0 8px;}
+.ipod-controls button{background:none;border:none;color:rgba(255,255,255,.8);font-size:14px;cursor:pointer;}
+/* OVERLAYS */
+.int-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:none;align-items:center;justify-content:center;}
+.int-overlay.open{display:flex;}
+.int-popup{position:relative;max-height:92vh;overflow:auto;}
+.int-close{position:absolute;top:-12px;right:-12px;width:32px;height:32px;border-radius:50%;background:#333;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1;}
+/* KINDLE POPUP */
+.kindle-popup{width:700px;max-width:95vw;background:#e8e4de;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;font-family:Georgia,serif;}
+.kp-screen{display:flex;flex:1;min-height:400px;}
+.kp-list{width:240px;background:#ddd9d3;padding:24px 16px;overflow-y:auto;border-right:1px solid #ccc9c4;}
+.kp-list h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:16px;font-family:var(--f-body);}
+.book-item{padding:10px 12px;border-radius:8px;cursor:pointer;margin-bottom:4px;font-size:12px;color:#333;line-height:1.4;transition:background .2s;}
+.book-item:hover,.book-item.active{background:#c8c4be;color:#111;}
+.kp-content{flex:1;padding:32px 28px;overflow-y:auto;}
+.kp-content #book-title{font-size:22px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:6px;}
+.kp-content #book-author{font-size:12px;color:#888;margin-bottom:24px;font-family:var(--f-body);}
+.kp-content #book-desc{font-size:14px;color:#333;line-height:1.9;}
+.kp-bar{height:44px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;}
+.kp-bar span{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:2px;font-family:var(--f-body);}
+/* GAMEBOY POPUP */
+.gbp-wrap{background:#9BD423;border-radius:20px 20px 60px 20px;padding:20px 24px 28px;width:340px;}
+.gbp-screen-wrap{background:#1a2a1a;border-radius:8px;padding:10px;border:4px solid #111;margin-bottom:16px;}
+.gbp-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.gbp-hud span{font-size:10px;font-family:monospace;color:#4aff4a;}
+#snake-canvas{display:block;border-radius:3px;}
+.gbp-controls{display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin-bottom:12px;}
+.gbp-dpad{display:grid;grid-template-columns:repeat(3,36px);grid-template-rows:repeat(3,36px);gap:2px;}
+.gbp-dpad button{background:#222;border:none;border-radius:4px;color:#9BD423;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.gbp-dpad .empty{background:transparent;pointer-events:none;}
+.gbp-ab{display:flex;gap:10px;align-items:center;}
+.gbp-ab button{width:42px;height:42px;border-radius:50%;border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+.gbp-ab .btn-a{background:#e74c3c;}
+.gbp-ab .btn-b{background:#3498db;}
+.gbp-bottom{display:flex;justify-content:center;gap:14px;}
+.gbp-bottom button{background:#333;border:none;border-radius:6px;padding:6px 16px;color:#9BD423;font-size:10px;font-family:monospace;cursor:pointer;}
+.gbp-gamelist{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.gbp-gamelist span{background:rgba(0,0,0,.25);border-radius:6px;padding:5px 8px;font-size:10px;font-family:monospace;color:#1a2a00;}
+/* TV POPUP */
+.tvp-wrap{background:#c0c0c0;border-radius:16px;padding:20px;width:540px;position:relative;}
+.tvp-antenna{position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:3px;height:32px;background:#aaa;}
+.tvp-body{display:flex;gap:12px;align-items:stretch;}
+.tvp-main{flex:1;}
+.tvp-screen{background:#000;border-radius:8px;overflow:hidden;aspect-ratio:16/10;margin-bottom:12px;}
+.tvp-screen img{width:100%;height:100%;object-fit:cover;transition:opacity .4s;}
+.tvp-movie-label{text-align:center;font-size:12px;color:#333;font-family:var(--f-body);margin-bottom:12px;}
+.tvp-btns{display:flex;justify-content:center;gap:16px;}
+.tvp-btns button{width:42px;height:38px;border-radius:8px;background:#aaa;border:2px solid #888;cursor:pointer;font-size:14px;color:#333;font-weight:700;transition:transform .1s;}
+.tvp-btns button:active{transform:scale(.93);}
+.tvp-btns .tvp-power{background:#e8780a;color:#fff;border-color:#c06000;}
+.tvp-speaker{width:32px;display:flex;flex-direction:column;gap:5px;justify-content:center;padding:10px 0;}
+.tvp-speaker .sp{height:3px;background:#aaa;border-radius:2px;}
+.tvp-movie-list{margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.tvp-movie-item{background:rgba(0,0,0,.08);border-radius:8px;padding:8px;font-family:var(--f-body);}
+.tvp-movie-item .mv-title{font-size:11px;font-weight:600;color:#1a1a1a;}
+.tvp-movie-item .mv-stars{font-size:10px;color:#e8780a;}
+/* IPOD POPUP */
+.ipp-wrap{background:#FF6B1A;border-radius:28px;padding:20px 20px 28px;width:320px;}
+.ipp-screen{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.ipp-screen iframe{display:block;border-radius:12px;}
+.ipp-wheel{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.ipp-btns{display:flex;justify-content:space-between;width:100%;padding:0 8px;}
+.ipp-btns button{background:rgba(0,0,0,.2);border:none;border-radius:8px;width:48px;height:36px;color:#fff;font-size:16px;cursor:pointer;}
+.ipp-wheel-ring{width:120px;height:120px;border-radius:50%;background:rgba(0,0,0,.2);display:grid;place-items:center;}
+.ipp-wheel-center{width:52px;height:52px;border-radius:50%;background:#FF6B1A;border:3px solid rgba(255,255,255,.4);}
+</style>
+<div class="section__bar">
+  <span class="section__num">08</span>
+  <span class="section__name">//INTEREST</span>
+  <span class="section__total">TOT. 09</span>
+</div>
+<h2 class="section__title">What i&rsquo;m into</h2>
+<div class="int-desc">
+  <p>Beyond the pixels and the prototypes, my design is fuelled by a constant stream of high-fidelity inputs. Whether I&rsquo;m analysing the deep metaphors of an Art Film, exploring the immersive mechanics of AAA and Indie games, or getting lost in the rhythm of a curated playlist, I&rsquo;m always looking for that next spark of inspiration.</p>
+  <p>When I&rsquo;m not behind a screen, you&rsquo;ll find me at the intersection of discipline and curiosity &mdash; training for marathons, hitting the badminton court, or diving into a book on human behaviour. For me, life is an endless loop of learning random things and finding the art in every detail.</p>
+</div>
+<div class="int-modules">
+  <!-- BOOKS -->
+  <div class="int-module" onclick="openInterestPopup('books')">
+    <div class="kindle-card">
+      <div class="kindle-screen">
+        <div class="k-title">KNOWLEDGE<br>IN THE HEAD<br>AND IN THE WORLD</div>
+        <div class="k-body">Every day we are confronted by numerous objects, devices, cars, and seats, each of which requires us to operate or sit in some particular manner. Our plea messages quite well. Our knowledge is often quite inaccurate, yet despite our ignorance we manage quite well.</div>
+      </div>
+      <div class="kindle-bar"><span>&#9776;</span><span>E-reader</span><span>&#9650;</span></div>
+    </div>
+    <span class="int-label">Books</span>
+  </div>
+  <!-- GAMES -->
+  <div class="int-module" onclick="openInterestPopup('games')">
+    <div class="gb-card">
+      <div class="gb-screen-wrap">
+        <div class="gb-screen"><span>&#9654; PLAY</span></div>
+      </div>
+      <div class="gb-controls">
+        <div class="gb-dpad">
+          <div class="empty"></div><button>W</button><div class="empty"></div>
+          <button>A</button><div class="empty" style="background:#444;border-radius:50%;"></div><button>D</button>
+          <div class="empty"></div><button>S</button><div class="empty"></div>
+        </div>
+        <div class="gb-ab">
+          <button>B</button><button>A</button>
+        </div>
+      </div>
+      <div class="gb-bottom">
+        <button>Play</button><button>Pause</button>
+      </div>
+    </div>
+    <span class="int-label">Games</span>
+  </div>
+  <!-- MOVIES -->
+  <div class="int-module" onclick="openInterestPopup('movies')">
+    <div class="tv-card" style="position:relative;margin-top:20px;">
+      <div class="tv-antenna"></div>
+      <div class="tv-main">
+        <div class="tv-screen-box"><img src="https://image.tmdb.org/t/p/w300/gEU2QniE6E77NI6lCU6MxlNBvIe.jpg" alt="movie"></div>
+        <div class="tv-controls">
+          <button class="tv-btn">&#9664;&#9664;</button>
+          <button class="tv-btn power">&#9679;</button>
+          <button class="tv-btn">&#9654;&#9654;</button>
+        </div>
+      </div>
+      <div class="tv-speaker">
+        <div class="sp-line"></div><div class="sp-line"></div><div class="sp-line"></div>
+        <div class="sp-line"></div><div class="sp-line"></div><div class="sp-line"></div>
+      </div>
+    </div>
+    <span class="int-label">Movies</span>
+  </div>
+  <!-- MUSIC -->
+  <div class="int-module" onclick="openInterestPopup('music')">
+    <div class="ipod-card">
+      <div class="ipod-art-strip">
+        <img src="https://image.tmdb.org/t/p/w92/gEU2QniE6E77NI6lCU6MxlNBvIe.jpg" alt="a1">
+        <img src="https://image.tmdb.org/t/p/w92/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg" alt="a2">
+        <img src="https://image.tmdb.org/t/p/w92/7IiTTgloROVKgLloE2A0RvZt4dN.jpg" alt="a3">
+      </div>
+      <div class="ipod-track">
+        <div class="i-song">Your Playlist</div>
+        <div class="i-artist">Tap to open</div>
+      </div>
+      <div class="ipod-wheel-wrap">
+        <div class="ipod-wheel"><div class="ipod-center"></div></div>
+      </div>
+      <div class="ipod-controls">
+        <button>&#9664;&#9664;</button>
+        <button style="font-size:18px;">&#9654;</button>
+        <button>&#9654;&#9654;</button>
+      </div>
+    </div>
+    <span class="int-label">Musics</span>
+  </div>
+</div>
+<div class="int-cta">
+  <a href="#">Know more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="12" y2="2"/><polyline points="5 2 12 2 12 9"/></svg></a>
+</div>
+</section>
+
+<!-- ── BOOKS POPUP ── -->
+<div class="int-overlay" id="popup-books">
+  <div class="int-popup kindle-popup">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="kp-screen">
+      <div class="kp-list">
+        <h3>My Library</h3>
+        <div class="book-item active" onclick="showBook(0)">The Design of Everyday Things</div>
+        <div class="book-item" onclick="showBook(1)">Don&rsquo;t Make Me Think</div>
+        <div class="book-item" onclick="showBook(2)">Thinking, Fast and Slow</div>
+        <div class="book-item" onclick="showBook(3)">Hooked</div>
+        <div class="book-item" onclick="showBook(4)">Sprint</div>
+        <div class="book-item" onclick="showBook(5)">Creative Confidence</div>
+      </div>
+      <div class="kp-content">
+        <div id="book-title"></div>
+        <div id="book-author"></div>
+        <div id="book-desc"></div>
+      </div>
+    </div>
+    <div class="kp-bar"><span>E-READER &nbsp;&#8226;&nbsp; YOUR LIBRARY</span></div>
+  </div>
+</div>
+
+<!-- ── GAMES POPUP ── -->
+<div class="int-overlay" id="popup-games">
+  <div class="int-popup gbp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="gbp-screen-wrap">
+      <div class="gbp-hud">
+        <span>SNAKE</span><span id="snake-score">SCORE: 0</span>
+      </div>
+      <canvas id="snake-canvas" width="200" height="200"></canvas>
+    </div>
+    <div class="gbp-controls">
+      <div class="gbp-dpad">
+        <div class="empty"></div><button onclick="gbDir('up')">&#9650;</button><div class="empty"></div>
+        <button onclick="gbDir('left')">&#9664;</button><div class="empty" style="background:#444;border-radius:50%;"></div><button onclick="gbDir('right')">&#9654;</button>
+        <div class="empty"></div><button onclick="gbDir('down')">&#9660;</button><div class="empty"></div>
+      </div>
+      <div class="gbp-ab">
+        <button class="btn-b" onclick="gbRestart()">B</button>
+        <button class="btn-a" onclick="gbRestart()">A</button>
+      </div>
+    </div>
+    <div class="gbp-bottom">
+      <button onclick="gbRestart()">START</button>
+      <button onclick="closeInterestPopup()">SELECT</button>
+    </div>
+    <div class="gbp-gamelist">
+      <span>Hollow Knight</span><span>Celeste</span>
+      <span>Stardew Valley</span><span>Among Us</span>
+      <span>Minecraft</span><span>Undertale</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── MOVIES POPUP ── -->
+<div class="int-overlay" id="popup-movies">
+  <div class="int-popup tvp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="tvp-antenna"></div>
+    <div class="tvp-body">
+      <div class="tvp-main">
+        <div class="tvp-screen"><img id="tv-poster" src="" alt="movie poster"></div>
+        <div class="tvp-movie-label" id="tv-movie-label"></div>
+        <div class="tvp-btns">
+          <button onclick="prevMovie()">&#9664;&#9664;</button>
+          <button class="tvp-power">&#9679;</button>
+          <button onclick="nextMovie()">&#9654;&#9654;</button>
+        </div>
+      </div>
+      <div class="tvp-speaker">
+        <div class="sp"></div><div class="sp"></div><div class="sp"></div>
+        <div class="sp"></div><div class="sp"></div><div class="sp"></div>
+      </div>
+    </div>
+    <div class="tvp-movie-list">
+      <div class="tvp-movie-item"><div class="mv-title">Interstellar</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Inception</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Parasite</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Whiplash</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">The Dark Knight</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Her</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MUSIC POPUP ── -->
+<div class="int-overlay" id="popup-music">
+  <div class="int-popup ipp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="ipp-screen">
+      <iframe id="spotify-frame" style="border-radius:12px;" width="100%" height="380" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    <div class="ipp-wheel">
+      <div class="ipp-btns">
+        <button>&#9664;&#9664;</button>
+        <button style="font-size:20px;">&#9654;</button>
+        <button>&#9654;&#9654;</button>
+      </div>
+      <div class="ipp-wheel-ring"><div class="ipp-wheel-center"></div></div>
+    </div>
+  </div>
+</div>
+<script src="interest.js"></script>

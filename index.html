@@ -1,0 +1,2827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajay | Product Designer</title>
+    <meta name="description"
+        content="Ajay Ã¢â‚¬â€ Product Designer crafting meaningful digital experiences. Based in Pondicherry, India.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Chivo+Mono:wght@300;400;500&family=Roboto+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================================
+       DESIGN TOKENS  Ã¢â‚¬â€ extracted directly from Figma JSON
+       ===================================================================== */
+        :root {
+            /* Background: r=0.0549, g=0.0588, b=0.0588 Ã¢â€ â€™ #0E0F0F */
+            --bg: #0E0F0F;
+            --surface: #161818;
+            --border: rgba(255, 255, 255, 0.10);
+            --text: #FFFFFF;
+            --muted: rgba(255, 255, 255, 0.45);
+            --muted-hi: rgba(255, 255, 255, 0.65);
+
+            /* Accents from Figma */
+            --green: #3DDD84;
+            /* open-to-work dot */
+            --lime: #D4E96B;
+            /* "Ajay," name highlight */
+            --peach: #E2A18A;
+            /* Let's Connect button */
+
+            /* Fonts */
+            --f-head: 'Poppins', sans-serif;
+            --f-body: 'DM Sans', sans-serif;
+            --f-mono: 'Chivo Mono', monospace;
+            --f-badge: 'Roboto Mono', monospace;
+
+            /* Figma exact letter-spacing (Chivo Mono nav items) */
+            --ls-nav: -0.32px;
+            --ls-badge: -0.32px;
+
+            /* Figma paddings: paddingLeft=paddingRight=160, paddingTop=paddingBottom=60 */
+            --px: 160px;
+            --py: 60px;
+
+            /* Nav gap from Figma: itemSpacing=32px */
+            --nav-gap: 32px;
+
+            /* Pill radius */
+            --r-pill: 1000px;
+            --r-card: 24px;
+
+            /* Nav bar height */
+            --nav-h: 72px;
+        }
+
+        /* =====================================================================
+       RESET
+       ===================================================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            cursor: none;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--f-body);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+
+        body.light-theme {
+            --bg: #FFFFFF;
+            --text: #0E0F0F;
+            --surface: #F5F5F5;
+            --border: rgba(0, 0, 0, 0.10);
+            --muted: rgba(0, 0, 0, 0.45);
+            --muted-hi: rgba(0, 0, 0, 0.65);
+        }
+
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Tools BG Wrapper Ã¢â€â‚¬Ã¢â€â‚¬ */
+        #tools-bg-wrapper {
+            width: 100%;
+            transition: background 0.55s ease;
+            background: #0E0F0F;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Light state Ã¢â‚¬â€ applied by JS when bg becomes white or a light tool color */
+        #tools-bg-wrapper.tools-light .section__num,
+        #tools-bg-wrapper.tools-light .section__name,
+        #tools-bg-wrapper.tools-light .section__total,
+        #tools-bg-wrapper.tools-light .section__bar,
+        #tools-bg-wrapper.tools-light .section__title {
+            color: #0E0F0F !important;
+        }
+
+        .tools-inner {
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
+            position: relative;
+        }
+
+        .tools-header {
+            padding: 80px var(--px) 0;
+            max-width: 1726px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tools-description {
+            /* Fixed height Ã¢â‚¬â€ prevents section from jumping when text changes from 1 line to 2 */
+            height: 180px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 var(--px);
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Tools Subtitle */
+        #tools-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: var(--f-body);
+            font-size: 24px;
+            transition: color 0.4s ease;
+            margin: 0;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        /* Typographic double curly quote marks flanking the tool description */
+        .quote-icon {
+            display: none;
+            font-size: 72px;
+            line-height: 0.6;
+            opacity: 0.6;
+            color: currentColor;
+            font-family: Georgia, 'Times New Roman', serif;
+            flex-shrink: 0;
+            align-self: center;
+            margin: 0 20px;
+            user-select: none;
+        }
+
+        #tools-subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #tools-subtitle.active .quote-icon {
+            display: inline;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =====================================================================
+       NAVBAR
+       ===================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: var(--nav-h);
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(14, 15, 15, .92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* nav-light = dark text on navbar (used for white bg default + light-bg tools like Stitch/Notion) */
+        /* Background is always set via JS inline style Ã¢â‚¬â€ this class only controls text colors */
+        .navbar.nav-light {
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .navbar.nav-light .nav__link {
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        .navbar.nav-light .nav__link:hover {
+            color: #0E0F0F;
+        }
+
+        .navbar.nav-light .nav__badge {
+            border-color: rgba(0, 0, 0, 0.18);
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .navbar.nav-light .nav__badge-dot-wrap {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar.nav-light .nav__badge-text {
+            color: #0E0F0F;
+        }
+
+        /* Logo inverts to black on white navbar */
+        .navbar.nav-light .nav__logo img {
+            filter: invert(1);
+            transition: filter 0.5s ease;
+        }
+
+        .nav__logo img {
+            transition: filter 0.5s ease;
+        }
+
+        /* Tool brand color on navbar Ã¢â‚¬â€ white text */
+        .navbar.nav-colored .nav__link {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .navbar.nav-colored .nav__link:hover {
+            color: #FFFFFF;
+        }
+
+        .navbar.nav-colored .nav__badge {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .navbar.nav-colored .nav__badge-dot-wrap {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .navbar.nav-colored .nav__badge-text {
+            color: #FFFFFF;
+        }
+
+        .navbar.nav-colored .nav__logo img {
+            filter: brightness(0) invert(1);
+        }
+
+        .nav__inner {
+            /* Figma: total width=1406, paddingLeft=paddingRight=160 Ã¢â€ â€™ content=1086 */
+            max-width: 1726px;
+            /* Figma full frame width */
+            margin: 0 auto;
+            padding: 0 var(--px);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Logo */
+        .nav__logo img {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Links row Ã¢â‚¬â€ Figma: HORIZONTAL, itemSpacing=32px, all Chivo Mono */
+        .nav__links {
+            display: flex;
+            align-items: center;
+            gap: var(--nav-gap);
+        }
+
+        .nav__link {
+            font-family: var(--f-mono);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.19;
+            letter-spacing: var(--ls-nav);
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.4s ease;
+        }
+
+        .nav__link:hover {
+            color: var(--text);
+        }
+
+        /* "OPEN TO WORK" badge Ã¢â‚¬â€ Figma: Roboto Mono, 16px, -0.32px, pill container */
+        .nav__badge {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 4px 14px 4px 4px;
+            border-radius: var(--r-pill);
+            border: 0.5px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.08);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav__badge-dot-wrap {
+            width: 18px;
+            height: 18px;
+            border-radius: var(--r-pill);
+            background: rgba(255, 255, 255, 0.10);
+            border: 0.5px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav__badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(.8);
+            }
+        }
+
+        .nav__badge-text {
+            font-family: var(--f-badge);
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: var(--ls-badge);
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        /* Hamburger (hidden desktop) */
+        .nav__hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .nav__hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform .3s, opacity .3s;
+        }
+
+        .nav__hamburger[aria-expanded="true"] span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .nav__hamburger[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav__hamburger[aria-expanded="true"] span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile menu drawer */
+        .nav__drawer {
+            position: fixed;
+            top: var(--nav-h);
+            left: 0;
+            right: 0;
+            background: rgba(14, 15, 15, .97);
+            backdrop-filter: blur(24px);
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height .35s ease, padding .35s ease;
+            padding: 0 var(--px);
+        }
+
+        .nav__drawer.open {
+            max-height: 400px;
+            padding: 32px var(--px);
+        }
+
+        .nav__drawer .nav__link {
+            display: block;
+            font-size: 22px;
+            padding: 10px 0;
+        }
+
+        /* =====================================================================
+       HERO  Ã¢â‚¬â€ Figma: total frame 1726Ãƒâ€”1067, inner content 1406Ãƒâ€”711
+               Left 400Ãƒâ€”600 | Mid 517Ãƒâ€”600 | Right 400Ãƒâ€”600  (gap:38)
+       ===================================================================== */
+        .hero {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            /* Hero frame height in Figma = 1067px (including nav 60px top pad) */
+            height: 100vh;
+            overflow: hidden;
+            padding-top: var(--nav-h);
+            z-index: 0;
+        }
+
+        /* full-bleed background (grid texture) */
+        .hero__bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: bottom center;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 10;
+            background: var(--bg);
+        }
+
+        /* 3-column grid matching Figma exactly */
+        .hero__grid {
+            position: relative;
+            z-index: 2;
+            max-width: 1726px;
+            margin: 0 auto;
+            padding: var(--py) var(--px);
+            min-height: calc(100vh - var(--nav-h));
+            display: grid;
+            /* Figma: Left=400, Mid=517, Right=400, gaps=38 Ã¢â€ â€™ 400+517+400 = 1317 + 76 gap = 1393 Ã¢â€°Ë† 1406 */
+            grid-template-columns: 400px 517px 1fr;
+            gap: 38px;
+            /* Figma itemSpacing=38 */
+            align-items: center;
+        }
+
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ LEFT COLUMN  (400Ãƒâ€”600, vertical, center align, gap=40) Ã¢â€â‚¬Ã¢â€â‚¬ */
+        .hero__left {
+            width: 400px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* primaryAxisAlignItems:CENTER */
+            align-items: center;
+            /* counterAxisAlignItems:CENTER */
+            gap: 40px;
+            /* Figma itemSpacing=40 */
+        }
+
+        /* "My Name" frame Ã¢â‚¬â€ horizontal, gap=16, align bottom */
+        .hero__name {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            /* Figma My Name itemSpacing=16 */
+            width: 100%;
+        }
+
+        .hero__name-mostly {
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: 58px;
+            color: var(--text);
+            letter-spacing: 0;
+            line-height: 1;
+        }
+
+        /* "Ajay," in italic Poppins (matches the script/handwriting look in Figma) */
+        .hero__name-script {
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: 58px;
+            line-height: 1;
+            color: var(--lime);
+            /* #D4E96B accent */
+            letter-spacing: 0;
+        }
+
+        /* "Role" frame Ã¢â‚¬â€ vertical, FIXED 400Ãƒâ€”210, gap=0 */
+        .hero__role {
+            width: 100%;
+        }
+
+        .hero__title {
+            font-family: var(--f-head);
+            /* Poppins */
+            font-weight: 600;
+            font-size: 88px;
+            /* scales so "Product Designer" fills ~400px width */
+            line-height: 1.00;
+            letter-spacing: -0.07em;
+            color: var(--text);
+        }
+
+        /* "Experience" frame Ã¢â‚¬â€ horizontal, itemSpacing=10, 231Ãƒâ€”42 */
+        .hero__exp {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Small pin/location icon */
+        .hero__exp-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero__exp-icon::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .hero__exp-text {
+            font-family: var(--f-mono);
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.5;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ MIDDLE COLUMN (517 wide: Banner 517Ãƒâ€”600 + CTA row 517Ãƒâ€”71) Ã¢â€â‚¬Ã¢â€â‚¬ */
+        .hero__mid {
+            width: 517px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Figma Mid Section counterAxisAlignItems:CENTER, itemSpacing=40 */
+            gap: 0;
+        }
+
+        /* Banner Image Ã¢â‚¬â€ exactly 517Ãƒâ€”600, show as-is (image already has arch shape) */
+        .hero__banner {
+            width: 517px;
+            height: 600px;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* CTA Buttons row Ã¢â‚¬â€ Figma: 517Ãƒâ€”71, horizontal, itemSpacing=20, CENTER */
+        .hero__ctas {
+            width: 517px;
+            height: 71px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            /* Figma itemSpacing=20 */
+            background: transparent;
+            border: none;
+            padding: 0 40px;
+            margin-top: 32px;
+        }
+
+        .hero__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--r-pill);
+            font-family: var(--f-body);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            transition: background .2s, transform .2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .hero__btn--resume {
+            background: rgba(255, 255, 255, 0.10);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .hero__btn--resume:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .hero__btn--connect {
+            background: var(--peach);
+            /* #E2A18A */
+            color: #1A0800;
+        }
+
+        .hero__btn--connect:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Arrow icon on buttons */
+        .hero__btn-arrow {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ RIGHT COLUMN (400Ãƒâ€”600, vertical CENTER, counterAxisAlignItems:MAX = RIGHT-ALIGN, gap=40) Ã¢â€â‚¬Ã¢â€â‚¬ */
+        .hero__right {
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* primaryAxisAlignItems:CENTER */
+            align-items: flex-end;
+            /* counterAxisAlignItems:MAX = right */
+            gap: 40px;
+            /* Figma itemSpacing=40 */
+        }
+
+        /* Location card (190Ãƒâ€”102) Ã¢â‚¬â€ vertical, counterAxisAlignItems:MAX, primaryAxisAlignItems:MAX, gap=20 */
+        .hero__info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            /* counterAxisAlignItems:MAX */
+            justify-content: flex-end;
+            /* primaryAxisAlignItems:MAX */
+            gap: 20px;
+            /* Figma itemSpacing=20 */
+            text-align: right;
+        }
+
+        /* Small circle icon */
+        .hero__info-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.30);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            align-self: flex-end;
+        }
+
+        .hero__info-icon svg {
+            width: 14px;
+            height: 14px;
+            opacity: .60;
+        }
+
+        .hero__info-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .hero__info-label {
+            font-family: var(--f-mono);
+            font-weight: 400;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .hero__info-value {
+            font-family: var(--f-body);
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text);
+            text-align: right;
+        }
+
+        /* =====================================================================
+           BODY / SECTION WRAPPER  (below hero)
+       ===================================================================== */
+        .section {
+            max-width: 1726px;
+            margin: 0 auto;
+            padding: 80px var(--px);
+        }
+
+        /* Section header bar Ã¢â‚¬â€ Figma: Chivo Mono Medium 16px, UPPER, horizontal, space-between */
+        .section__bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 0.2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .section__num {
+            font-family: var(--f-mono);
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 0;
+            color: var(--muted);
+        }
+
+        .section__name {
+            font-family: var(--f-mono);
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            color: var(--text);
+        }
+
+        .section__total {
+            font-family: var(--f-mono);
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        /* =====================================================================
+       ABOUT ME
+       ===================================================================== */
+        .section__title {
+            font-family: var(--f-head);
+            font-weight: 600;
+            font-size: 76px;
+            line-height: 1.1;
+            letter-spacing: -0.07em;
+            color: var(--text);
+            text-align: center;
+            padding-top: 40px;
+            margin-bottom: 80px;
+        }
+
+        .about__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about__body {
+            font-family: var(--f-body);
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .about__body p+p {
+            margin-top: 1.25rem;
+        }
+
+        .about__collage img {
+            width: 100%;
+            border-radius: var(--r-card);
+        }
+
+        /* =====================================================================
+       PROJECTS (Bento)
+       ===================================================================== */
+        .projects__bento {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 40px 20px;
+        }
+
+        .project-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+            grid-column: span 2;
+        }
+
+        .project-wrap.span-4 {
+            grid-column: span 4;
+        }
+
+        .project-wrap.span-3 {
+            grid-column: span 3;
+        }
+
+        .project-card {
+            display: block;
+            border-radius: var(--r-card);
+            overflow: hidden;
+            transition: transform .3s;
+            flex-grow: 1;
+            width: 100%;
+            aspect-ratio: 10 / 9;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .project-wrap.span-4 .project-card {
+            aspect-ratio: 2.28 / 1;
+        }
+
+        .project-wrap.span-3 .project-card {
+            aspect-ratio: 1.69 / 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .project-label span:first-child {
+            color: var(--text);
+            font-weight: 500;
+            text-transform: capitalize;
+            font-size: 16px;
+            letter-spacing: 0;
+            font-family: var(--f-body);
+        }
+
+        /* =====================================================================
+       WHAT I DO Ã¢â‚¬â€œ Skills Interactive image
+       ===================================================================== */
+        .skills-img {
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            border-radius: var(--r-card);
+        }
+
+        /* =====================================================================
+       EXPERIENCE
+       ===================================================================== */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .exp-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .exp-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .exp-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-company {
+            font-family: var(--f-head);
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--peach);
+        }
+
+        .exp-date {
+            font-family: var(--f-mono);
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .exp-mid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .exp-role {
+            font-family: var(--f-head);
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .exp-desc {
+            font-family: var(--f-body);
+            font-size: 14px;
+            color: var(--muted-hi);
+            line-height: 1.6;
+        }
+
+        .exp-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            text-align: right;
+        }
+
+        .exp-type {
+            font-family: var(--f-mono);
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .exp-loc {
+            font-family: var(--f-mono);
+            font-size: 12px;
+            color: var(--text);
+            text-transform: uppercase;
+        }
+
+        /* =====================================================================
+       PHILOSOPHY
+       ===================================================================== */
+        .philosophy__container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .phil-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+        }
+
+        .phil-btn:hover {
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .philosophy__card {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 800px;
+        }
+
+        .phil-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .phil-quote {
+            font-family: var(--f-head);
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .phil-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 60px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--muted);
+            transition: all .3s;
+        }
+
+        .dot.active {
+            background: var(--peach);
+            width: 12px;
+            border-radius: 4px;
+        }
+
+        /* =====================================================================
+       TOOLS THAT I USE
+       ===================================================================== */
+        .tools-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+        }
+
+        .tools-container {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 12px;
+            display: inline-block;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .tool-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            overflow: hidden;
+        }
+
+        .tool-icon:hover {
+            transform: translateY(-4px);
+        }
+
+        .tool-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* =====================================================================
+       WHAT I'M INTO
+       ===================================================================== */
+        .into-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .into-card {
+            border-radius: var(--r-card);
+            overflow: hidden;
+        }
+
+        .into-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        /* =====================================================================
+       FAQ
+       ===================================================================== */
+        .faq__wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .faq__img {
+            width: 100%;
+            border-radius: var(--r-card);
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item summary {
+            font-family: var(--f-body);
+            font-weight: 500;
+            font-size: 17px;
+            padding: 22px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: 'Ã¯Â¼â€¹';
+            font-size: 20px;
+            color: var(--muted);
+            transition: transform .3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-body {
+            font-family: var(--f-body);
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+            padding-bottom: 20px;
+        }
+
+        /* =====================================================================
+       CONTACT / FOOTER
+       ===================================================================== */
+        .footer {
+            position: relative;
+            overflow: hidden;
+            padding: var(--py) var(--px);
+            text-align: center;
+        }
+
+        .footer__bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: .7;
+            pointer-events: none;
+        }
+
+        .footer__inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer__pre {
+            font-family: var(--f-mono);
+            font-size: 13px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .footer__email {
+            font-family: var(--f-head);
+            font-weight: 800;
+            font-size: clamp(24px, 4vw, 52px);
+            letter-spacing: -.03em;
+            line-height: 1.15;
+        }
+
+        .footer__actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-btn {
+            padding: 13px 26px;
+            border-radius: var(--r-pill);
+            font-family: var(--f-body);
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            transition: background .2s, transform .2s;
+        }
+
+        .footer-btn--copy {
+            background: rgba(255, 255, 255, .10);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .18);
+        }
+
+        .footer-btn--copy:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .footer-btn--hello {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .footer-btn--hello:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer__socials {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer__social {
+            font-family: var(--f-mono);
+            font-size: 13px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .2s;
+        }
+
+        .footer__social:hover {
+            color: var(--text);
+        }
+
+        /* =====================================================================
+       CUSTOM CURSOR
+       ===================================================================== */
+        body,
+        a,
+        button,
+        img,
+        input,
+        textarea,
+        summary {
+            cursor: none !important;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transform: translate(0, 0);
+            /* Updated by JS */
+            transition: opacity 0.2s ease;
+            opacity: 0;
+            /* Hidden initially until mouse moves */
+        }
+
+        .custom-cursor svg {
+            /* The tip of the arrow in our path is approx at 4.5px, 2.5px. 
+           We offset so the real mouse click is exactly at the tip. */
+            transform: translate(-4.5px, -2.5px);
+            width: 24px;
+            height: 24px;
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .cursor-label {
+            background-color: var(--green);
+            color: #1A0800;
+            font-family: var(--f-body);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
+            /* Position next to the arrow */
+            margin-top: -6px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cursor-label.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* =====================================================================
+       RESPONSIVE Ã¢â‚¬â€ TABLET Ã¢â€°Â¤ 1200px
+       ===================================================================== */
+        @media (max-width: 1200px) {
+            :root {
+                --px: 40px;
+            }
+
+            .nav__links {
+                display: none;
+            }
+
+            .nav__hamburger {
+                display: flex;
+            }
+
+            /* Hero: stack vertically, full width */
+            .hero__grid {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                gap: 32px;
+                padding-bottom: 48px;
+            }
+
+            .hero__left {
+                width: 100%;
+                max-width: 517px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero__name {
+                justify-content: center;
+            }
+
+            .hero__exp {
+                justify-content: center;
+            }
+
+            .hero__mid {
+                width: 100%;
+                max-width: 517px;
+            }
+
+            .hero__banner {
+                width: 100%;
+                height: auto;
+                max-width: 400px;
+            }
+
+            .hero__ctas {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .hero__right {
+                width: 100%;
+                max-width: 517px;
+                align-items: center;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .about__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .into-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .faq__wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* =====================================================================
+       RESPONSIVE Ã¢â‚¬â€ MOBILE Ã¢â€°Â¤ 768px
+       ===================================================================== */
+        @media (max-width: 768px) {
+            :root {
+                --px: 20px;
+                --py: 40px;
+            }
+
+            .nav__badge {
+                display: none;
+            }
+
+            .hero__title {
+                font-size: 60px;
+            }
+
+            .hero__banner {
+                max-width: 300px;
+            }
+
+            .hero__ctas {
+                max-width: 300px;
+            }
+
+            .hero__ctas {
+                flex-direction: column;
+                height: auto;
+                padding: 16px 20px;
+                gap: 12px;
+            }
+
+            .projects__bento {
+                grid-template-columns: 1fr;
+            }
+
+            .project-wrap,
+            .project-wrap.span-3,
+            .project-wrap.span-4 {
+                grid-column: span 1;
+            }
+
+            .project-wrap .project-card,
+            .project-wrap.span-3 .project-card,
+            .project-wrap.span-4 .project-card {
+                aspect-ratio: 10 / 9;
+                height: auto;
+            }
+
+            .into-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer__actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Added for new sections */
+            .exp-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .exp-right {
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .philosophy__container {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .philosophy__card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     NAVBAR
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+    <header>
+        <nav class="navbar" id="navbar" aria-label="Primary navigation">
+            <div class="nav__inner">
+
+                <!-- Logo -->
+                <a href="#top" class="nav__logo" aria-label="Home">
+                    <img src="Media/3325_2295.svg" alt="Ajay logo mark"
+                        style="height: 26px; width: 140px; object-fit: contain;">
+                </a>
+
+                <!-- Desktop nav links Ã¢â‚¬â€ Figma: Chivo Mono 16px, UPPER, -0.32px -->
+                <ul class="nav__links" role="list">
+                    <li><a href="#about" class="nav__link">About Me</a></li>
+                    <li><a href="#projects" class="nav__link">Projects</a></li>
+                    <li><a href="#experience" class="nav__link">Experience</a></li>
+                    <li><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+
+                <!-- Open to Work badge -->
+                <div class="nav__badge" aria-label="Open to work status">
+                    <div class="nav__badge-dot-wrap">
+                        <span class="nav__badge-dot"></span>
+                    </div>
+                    <span class="nav__badge-text">OPEN TO WORK</span>
+                </div>
+
+                <!-- Hamburger (tablet/mobile) -->
+                <button class="nav__hamburger" id="ham-btn" aria-expanded="false" aria-controls="nav-drawer"
+                    aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+
+            </div>
+
+            <!-- Mobile drawer -->
+            <div id="nav-drawer" class="nav__drawer" aria-hidden="true">
+                <a href="#about" class="nav__link">About Me</a>
+                <a href="#projects" class="nav__link">Projects</a>
+                <a href="#experience" class="nav__link">Experience</a>
+                <a href="#contact" class="nav__link">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     HERO Ã¢â‚¬â€ matches Figma 3-column layout exactly
+     Left 400Ãƒâ€”600 | Mid 517Ãƒâ€”(600+71) | Right 400Ãƒâ€”600
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+        <section class="hero" id="top" aria-label="Hero introduction">
+
+            <!-- Background grid texture -->
+            <img src="Media/background (top).png" alt="" class="hero__bg" aria-hidden="true">
+
+            <div class="hero__grid">
+
+                <!-- Ã¢â€â‚¬Ã¢â€â‚¬ LEFT COLUMN Ã¢â€â‚¬Ã¢â€â‚¬ -->
+                <div class="hero__left">
+
+                    <!-- "My Name" frame: Mostly + Ajay, -->
+                    <div class="hero__name">
+                        <img src="Media/ajay-signature.png" alt="Myself Ajay,"
+                            style="height: 52px; width: auto; object-fit: contain;">
+                    </div>
+
+                    <!-- "Role" frame: Product Designer (Poppins 800) -->
+                    <div class="hero__role">
+                        <h1 class="hero__title">Product<br>Designer</h1>
+                    </div>
+
+                    <!-- "Experience" row: icon + text -->
+                    <div class="hero__exp" style="gap: 16px;">
+                        <img src="Media/brain2.png" alt="Brain Icon"
+                            style="width: 36px; height: 36px; object-fit: contain; flex-shrink: 0;" aria-hidden="true">
+                        <p class="hero__exp-text">/// WITH 5+ YEARS<br>OVERALL EXPERIENCE</p>
+                    </div>
+
+                </div>
+
+                <!-- Ã¢â€â‚¬Ã¢â€â‚¬ MIDDLE COLUMN Ã¢â€â‚¬Ã¢â€â‚¬ -->
+                <div class="hero__mid">
+                    <!-- Banner Image Ã¢â‚¬â€ 517Ãƒâ€”600, the image already has the arch shape clipping -->
+                    <img src="Media/Banner Image.png" alt="Ajay Ã¢â‚¬â€ Product Designer" class="hero__banner">
+
+                    <!-- CTA Buttons row Ã¢â‚¬â€ Figma: 517Ãƒâ€”71, gap=20 -->
+                    <div class="hero__ctas">
+                        <a href="#" class="hero__btn hero__btn--resume">
+                            View Resume <span class="hero__btn-arrow"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg></span>
+                        </a>
+                        <a href="#contact" class="hero__btn hero__btn--connect">
+                            Let's Connect <span class="hero__btn-arrow"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="4" y1="20" x2="20" y2="4" />
+                                    <polyline points="9 4 20 4 20 15" />
+                                </svg></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ã¢â€â‚¬Ã¢â€â‚¬ RIGHT COLUMN Ã¢â€â‚¬Ã¢â€â‚¬ -->
+                <div class="hero__right">
+
+                    <!-- Location card SVG -->
+                    <img src="Media/3325_2370.svg" alt="Based in Pondicherry, India"
+                        style="display: block; width: 190px; height: 102px;">
+
+                    <!-- Service card SVG -->
+                    <img src="Media/3325_2377.svg" alt="Available All Around Worldwide"
+                        style="display: block; width: 231px; height: 102px;">
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Parallax overlay container -->
+        <main class="main-content">
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     ABOUT ME  (Section 1)  Ã¢â‚¬â€ Figma "//aBOUT ME"
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" id="about" aria-label="About Me">
+                <div class="section__bar">
+                    <span class="section__num">01</span>
+                    <span class="section__name">//aBOUT ME</span>
+                    <span class="section__total">TOT. 09</span>
+                </div>
+                <h2 class="section__title">About Me</h2>
+                <div class="about__grid">
+                    <div class="about__body">
+                        <p style="color: white; font-weight: 500;">Bonjour, I am Ajay Ã°Å¸â€“â€“</p>
+                        <p>I'm a Product Designer with <span
+                                style="text-decoration: underline; text-underline-offset: 4px;">2+ years</span> of
+                            experience, building on a diverse background that includes freelance work and a strong
+                            foundation in data research totaling <span
+                                style="text-decoration: underline; text-underline-offset: 4px;">5+ years</span> in the
+                            field. This unique blend allows me to create storytelling driven products based on user
+                            insights, always adapting and learning with a curious mindset.</p>
+                        <p><br><a href="#about"
+                                style="color: var(--text); text-decoration: underline; text-underline-offset: 4px; font-weight: 500;">Know
+                                About Me Ã¢â€ â€”</a></p>
+                    </div>
+                    <div class="about__collage">
+                        <img src="Media/My Image Collage.png" alt="Photo collage of Ajay">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     PROJECTS / CASE STUDIES
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" id="projects" aria-label="Case Studies">
+                <div class="section__bar">
+                    <span class="section__num">02</span>
+                    <span class="section__name">//CASE STUDIES & PROJECTS</span>
+                    <span class="section__total">TOT. 06</span>
+                </div>
+                <h2 class="section__title">Case Studies & Projects</h2>
+                <div class="projects__bento">
+                    <div class="project-wrap span-4">
+                        <a href="#" class="project-card"><img src="Media/Octopos - PD.png" alt="Octopos PD"></a>
+                        <div class="project-label"><span>Octopos</span><span>//PRODUCT DESIGN</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Octopos - BI.png" alt="Octopos BI"></a>
+                        <div class="project-label"><span>Octopos</span><span>//BRAND IDENTITY</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Vertex.png" alt="Vertex"></a>
+                        <div class="project-label"><span>Vertex</span><span>//MOBILE APP</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card">
+                            <img src="Media/Agaram.webp" alt="Agaram Brand Identity"
+                                style="width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block;">
+                        </a>
+                        <div class="project-label"><span>Agaram</span><span>//BRAND IDENTITY</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/FISHLY.png" alt="Fishly"></a>
+                        <div class="project-label"><span>Fishly</span><span>//MOBILE APP</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Twipe-Thumbnail-Image.png.png" alt="Twipe"></a>
+                        <div class="project-label"><span>Twipe</span><span>//CASE STUDY</span></div>
+                    </div>
+                    <div class="project-wrap span-4">
+                        <a href="#" class="project-card"><img src="Media/Vision Air x Siri.png"
+                                alt="Vision Air x Siri"></a>
+                        <div class="project-label"><span>Vision Air x Siri</span><span>//CASE STUDY</span></div>
+                    </div>
+
+                    <div class="project-wrap span-3">
+                        <a href="#" class="project-card">
+                            <video src="Media/Zyke Store.mp4" autoplay loop muted playsinline
+                                style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+                        </a>
+                        <div class="project-label"><span>Zkye Store</span><span>//WEBSITE</span></div>
+                    </div>
+                    <div class="project-wrap span-3">
+                        <a href="#" class="project-card"><img src="Media/Darwin Groups-Thumbnail-Image.png.png"
+                                alt="Darwin Groups"></a>
+                        <div class="project-label"><span>Darwin Groups</span><span>//ADMIN DASH...</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Germs Scan-Thumbnail-Image.png.png"
+                                alt="Germs Scan"></a>
+                        <div class="project-label"><span>Germs Scan</span><span>//MOBILE APP</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Bonbons-Thumbnail-Image.png.png"
+                                alt="Bonbons"></a>
+                        <div class="project-label"><span>Bonbons</span><span>WEB DESIGN</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Anchor-Thumbnail-Image.png.png"
+                                alt="Anchor"></a>
+                        <div class="project-label"><span>Anchor</span><span>WEB DESIGN</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     WHAT I DO Ã¢â‚¬â€ Skills Interactive
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" aria-label="What I Do">
+                <div class="section__bar">
+                    <span class="section__num">03</span>
+                    <span class="section__name">//WHAT I DO?</span>
+                    <span class="section__total">TOT. 04</span>
+                </div>
+                <h2 class="section__title">What I Do?</h2>
+                <img src="Media/Skills Interactive.png" alt="Skills cluster showing Ajay's design competencies"
+                    class="skills-img" data-cursor="Tools Cluster: Figma, Notion, etc.">
+            </section>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     EXPERIENCE
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" id="experience" aria-label="Experience">
+                <div class="section__bar">
+                    <span class="section__num">04</span>
+                    <span class="section__name">//EXPERIENCE</span>
+                    <span class="section__total">TOT. 09</span>
+                </div>
+                <h2 class="section__title">Experience</h2>
+                <div class="exp-list">
+                    <div class="exp-row">
+                        <div class="exp-left">
+                            <h3 class="exp-company">Charles Technologies</h3>
+                            <p class="exp-date">ONSITE // CHENNAI, INDIA.</p>
+                        </div>
+                        <div class="exp-mid">
+                            <h4 class="exp-role">Product Designer</h4>
+                            <p class="exp-desc">I lead the end-to-end design of complex SaaS ecosystems including mobile
+                                apps, web applications, and enterprise admin panels by defining scalable UX strategies
+                                and high-fidelity data dashboards while collaborating closely with engineering teams to
+                                ensure seamless development handoffs under tight business constraints.</p>
+                        </div>
+                        <div class="exp-right">
+                            <p class="exp-type">2024 - 2026</p>
+                            <p class="exp-loc">(1.5 YEARS)</p>
+                        </div>
+                    </div>
+                    <div class="exp-row">
+                        <div class="exp-left">
+                            <h3 class="exp-company">Grow10X</h3>
+                            <p class="exp-date">REMOTE // PONDICHERRY, INDIA.<br>(BASED - ADELAIDE, AUSTRALIA)</p>
+                        </div>
+                        <div class="exp-mid">
+                            <h4 class="exp-role">Data Researcher & UI Designer</h4>
+                            <p class="exp-desc">Balanced a dual role as Data Researcher and Designer, leveraging CRMs
+                                like HubSpot and Zoho to extract B2B market insights while simultaneously delivering
+                                user-centric digital marketing assets and design support for SaaS growth initiatives.
+                            </p>
+                        </div>
+                        <div class="exp-right">
+                            <p class="exp-type">2021 - 2024</p>
+                            <p class="exp-loc">(3.5 YEARS)</p>
+                        </div>
+                    </div>
+                    <div class="exp-row">
+                        <div class="exp-left">
+                            <h3 class="exp-company">Freelance</h3>
+                            <p class="exp-date">REMOTE // PONDICHERRY, INDIA.</p>
+                        </div>
+                        <div class="exp-mid">
+                            <h4 class="exp-role">Brand Identity, UIUX, & Visual Design</h4>
+                            <p class="exp-desc">Since 2018, I've worked as a full-cycle independent designer,
+                                successfully navigating projects ranging from conceptualizing raw brand identities to
+                                architecting complex digital interfaces taking each product through the entire
+                                lifecycle, from the initial whiteboard strategy to the final developer handoff.</p>
+                        </div>
+                        <div class="exp-right">
+                            <p class="exp-type">2018 - PRESENT</p>
+                            <p class="exp-loc">6+ YEARS</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     PHILOSOPHY
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" aria-label="Philosophy">
+                <div class="section__bar">
+                    <span class="section__num">05</span>
+                    <span class="section__name">//MY PHILOSOPHY</span>
+                    <span class="section__total">TOT. 05</span>
+                </div>
+                <h2 class="section__title">Philosophy</h2>
+                <div class="philosophy__container">
+                    <button class="phil-btn">Ã¢â€ Â</button>
+                    <div class="philosophy__card">
+                        <img src="Media/Steve Jobs.png" alt="Steve Jobs" class="phil-img"
+                            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg';">
+                        <h3 class="phil-quote">Design is not just what it looks like<br>and feels like. Design is how it
+                            works.<br><span
+                                style="font-size: 12px; font-family: var(--f-mono); color: var(--muted); letter-spacing: 0.1em; display: inline-block; margin-top: 16px;">-
+                                STEVE JOB</span></h3>
+                    </div>
+                    <button class="phil-btn">Ã¢â€ â€™</button>
+                </div>
+
+                <div class="phil-dots">
+                    <span class="dot"></span>
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                </div>
+            </section>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     TOOLS THAT I USE
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <div id="tools-bg-wrapper">
+                <div class="tools-inner" id="tools-section">
+                    <!-- Header row -->
+                    <div class="tools-header">
+                        <div class="section__bar">
+                            <span class="section__num">06</span>
+                            <span class="section__name">//MY DOCK</span>
+                            <span class="section__total">TOT. 06</span>
+                        </div>
+                        <h2 class="section__title" style="margin-bottom: 0; color: inherit;">Tools That I Use</h2>
+                    </div>
+
+                    <!-- Description Ã¢â‚¬â€ vertically centered in space between title and dock -->
+                    <div class="tools-description">
+                        <p id="tools-subtitle">
+                            <span class="quote-icon">&#x201C;</span>
+                            <span id="ts-text">Click and drag any tool</span>
+                            <span class="quote-icon">&#x201D;</span>
+                        </p>
+                    </div>
+
+                    <!-- Physics dock -->
+                    <div id="tools-physics-container" style="width: 100%; height: 600px; position: relative;"></div>
+                </div>
+            </div>
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     TESTIMONIALS
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <div id="testimonials-section"
+                style="background: #0E0F0F; color: #FFF; width: 100%; position: relative; overflow: hidden;">
+
+                <style>
+                    /* Ã¢â€â‚¬Ã¢â€â‚¬ Marquee Ã¢â€â‚¬Ã¢â€â‚¬ */
+                    .t-marquee-wrapper {
+                        position: sticky;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        z-index: 6;
+                        pointer-events: none;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        margin: 0 -80px;
+                        padding: 8px 0;
+                    }
+
+                    .t-marquee-track {
+                        display: inline-flex;
+                        animation: marqueeLeft 24s linear infinite;
+                        white-space: nowrap;
+                    }
+
+                    .t-marquee-track span {
+                        font-size: 96px;
+                        font-weight: 800;
+                        font-family: var(--f-head);
+                        color: #ffffff;
+                        letter-spacing: -3px;
+                        padding-right: 60px;
+                        opacity: 0.1;
+                        user-select: none;
+                        line-height: 1;
+                    }
+
+                    @keyframes marqueeLeft {
+                        0% {
+                            transform: translateX(0);
+                        }
+
+                        100% {
+                            transform: translateX(-50%);
+                        }
+                    }
+
+                    /* Ã¢â€â‚¬Ã¢â€â‚¬ Grid Ã¢â€â‚¬Ã¢â€â‚¬ */
+                    .t-section-inner {
+                        max-width: 1400px;
+                        margin: 0 auto;
+                        padding: 80px 60px 100px;
+                    }
+
+                    .t-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 0 28px;
+                        margin-top: 60px;
+                        align-items: start;
+                    }
+
+                    .t-col {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 24px;
+                    }
+
+                    #t-col-right {
+                        transform: translateY(80px);
+                        will-change: transform;
+                    }
+
+                    #t-col-left {
+                        will-change: transform;
+                    }
+
+                    /* Ã¢â€â‚¬Ã¢â€â‚¬ Card Ã¢â€â‚¬Ã¢â€â‚¬ */
+                    .t-card-v2 {
+                        background: #161818;
+                        border: 1px solid rgba(255, 255, 255, 0.07);
+                        border-radius: 20px;
+                        padding: 36px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                        transition: border-color 0.3s ease;
+                    }
+
+                    .t-card-v2:hover {
+                        border-color: rgba(255, 255, 255, 0.15);
+                    }
+
+                    .t-card-v2 .t-qmark {
+                        font-size: 52px;
+                        line-height: 1;
+                        color: rgba(255, 255, 255, 0.2);
+                        font-family: Georgia, serif;
+                    }
+
+                    .t-card-v2 .t-body {
+                        font-family: var(--f-body);
+                        font-size: 15px;
+                        line-height: 1.8;
+                        color: rgba(255, 255, 255, 0.72);
+                    }
+
+                    .t-card-v2 .t-body p {
+                        margin-bottom: 12px;
+                    }
+
+                    .t-card-v2 .t-body p:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    /* Ã¢â€â‚¬Ã¢â€â‚¬ Card footer Ã¢â€â‚¬Ã¢â€â‚¬ */
+                    .t-card-footer {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.06);
+                        padding-top: 18px;
+                        margin-top: 4px;
+                    }
+
+                    .t-avatar {
+                        width: 42px;
+                        height: 42px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        flex-shrink: 0;
+                        display: block;
+                    }
+
+                    .t-person {
+                        flex: 1;
+                    }
+
+                    .t-person strong {
+                        display: block;
+                        font-size: 14px;
+                        font-weight: 600;
+                        font-family: var(--f-body);
+                        color: #fff;
+                    }
+
+                    .t-person span {
+                        font-size: 12px;
+                        color: rgba(255, 255, 255, 0.38);
+                        font-family: var(--f-body);
+                    }
+
+                    .t-redirect-btn {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        border: 1px solid rgba(255, 255, 255, 0.15);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        color: rgba(255, 255, 255, 0.4);
+                        transition: border-color 0.2s, color 0.2s;
+                        text-decoration: none;
+                        align-self: center;
+                    }
+
+                    .t-redirect-btn:hover {
+                        border-color: rgba(255, 255, 255, 0.5);
+                        color: #fff;
+                    }
+
+                    .t-redirect-btn svg {
+                        width: 13px;
+                        height: 13px;
+                        stroke: currentColor;
+                        fill: none;
+                        stroke-width: 2;
+                        stroke-linecap: round;
+                        stroke-linejoin: round;
+                    }
+
+                    /* Ã¢â€â‚¬Ã¢â€â‚¬ View more Ã¢â€â‚¬Ã¢â€â‚¬ */
+                    .t-viewmore-row {
+                        display: flex;
+                        justify-content: flex-start;
+                        margin-top: 60px;
+                    }
+
+                    .t-viewmore-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        border: 1.5px solid rgba(255, 255, 255, 0.25);
+                        border-radius: 100px;
+                        padding: 14px 28px;
+                        font-family: var(--f-body);
+                        font-size: 15px;
+                        font-weight: 500;
+                        color: #fff;
+                        background: transparent;
+                        cursor: pointer;
+                        transition: border-color 0.3s, background 0.3s;
+                        text-decoration: none;
+                    }
+
+                    .t-viewmore-btn:hover {
+                        border-color: rgba(255, 255, 255, 0.6);
+                        background: rgba(255, 255, 255, 0.05);
+                    }
+
+                    .t-viewmore-btn svg {
+                        width: 16px;
+                        height: 16px;
+                        stroke: currentColor;
+                        fill: none;
+                        stroke-width: 2;
+                        stroke-linecap: round;
+                        stroke-linejoin: round;
+                    }
+
+                    @media (max-width: 768px) {
+                        .t-grid {
+                            grid-template-columns: 1fr;
+                        }
+
+                        #t-col-right {
+                            transform: none !important;
+                        }
+
+                        #t-col-left {
+                            transform: none !important;
+                        }
+
+                        .t-section-inner {
+                            padding: 60px 24px 80px;
+                        }
+
+                        .t-marquee-track span {
+                            font-size: 44px;
+                        }
+                    }
+                </style>
+
+                <!-- Sticky scrolling marquee Ã¢â‚¬â€ stays at mid-viewport while section scrolls -->
+                <div class="t-marquee-wrapper" aria-hidden="true">
+                    <div class="t-marquee-track">
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>Testimonials &copy; &ndash; Reviews &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                </div>
+
+                <section class="t-section-inner" aria-label="Testimonials">
+                    <div class="section__bar" style="margin-bottom: 0;">
+                        <span class="section__num">07</span>
+                        <span class="section__name">//TESTIMONIALS</span>
+                        <span class="section__total">TOT. 05</span>
+                    </div>
+                    <h2 class="section__title" style="margin-bottom: 0;">Testimonials</h2>
+
+                    <div class="t-grid">
+                        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ LEFT COLUMN Ã¢â€â‚¬Ã¢â€â‚¬ -->
+                        <div class="t-col" id="t-col-left">
+
+                            <!-- Card 1 -->
+                            <div class="t-card-v2">
+                                <div class="t-qmark">&ldquo;</div>
+                                <div class="t-body">
+                                    <p>"You know, some people just hit it Ã¢â‚¬â€ that's Ajay.</p>
+                                    <p>Working with him felt easy from the start. I shared a simple idea for Agaram
+                                        Facades, and he turned it into something clean and creative without any fuss.
+                                        Smart, calm, and gets the job done right.</p>
+                                    <p>Would definitely work with him again."</p>
+                                </div>
+                                <div class="t-card-footer">
+                                    <img class="t-avatar" src="Media/Profile Pics/Venkatesh S.png" alt="Venkatesh S">
+                                    <div class="t-person">
+                                        <strong>Venkatesh S</strong>
+                                        <span>Founder of Agaram Facades</span>
+                                    </div>
+                                    <a href="#" class="t-redirect-btn" title="View profile">
+                                        <svg viewBox="0 0 14 14">
+                                            <line x1="2" y1="12" x2="12" y2="2" />
+                                            <polyline points="5 2 12 2 12 9" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="t-card-v2">
+                                <div class="t-qmark">&ldquo;</div>
+                                <div class="t-body">
+                                    <p>Working with Ajay was a true partnership. As a startup owner, I brought him my
+                                        vision, and he expertly helped ideate and deliver refined design solutions.</p>
+                                    <p>His ability to provide critical feedback and iterate quickly within my timeframe
+                                        was exceptional. On top of that, he's a really cool, friendly guy Ã¢â‚¬â€
+                                        results-oriented and easy to approach. I'd recommend him for any project.</p>
+                                </div>
+                                <div class="t-card-footer">
+                                    <img class="t-avatar" src="Media/Profile Pics/Manoj Solairaj.png"
+                                        alt="Manoj Solairaj">
+                                    <div class="t-person">
+                                        <strong>Manoj Solairaj</strong>
+                                        <span>Founder of Germs Scan</span>
+                                    </div>
+                                    <a href="#" class="t-redirect-btn" title="View profile">
+                                        <svg viewBox="0 0 14 14">
+                                            <line x1="2" y1="12" x2="12" y2="2" />
+                                            <polyline points="5 2 12 2 12 9" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="t-card-v2">
+                                <div class="t-qmark">&ldquo;</div>
+                                <div class="t-body">
+                                    <p>I worked closely with Ajay as part of the design team and saw firsthand his
+                                        strong design thinking, collaboration, and reliability across fast moving
+                                        projects.</p>
+                                    <p>He consistently brought clarity to challenging problems through thoughtful
+                                        ideation, structured workflows, and a solid understanding of
+                                        userÃ¢â‚¬â€˜centered design. He handled multiple projects with strong time
+                                        management, stayed calm under pressure, and was always dependable during
+                                        critical delivery phases.</p>
+                                </div>
+                                <div class="t-card-footer">
+                                    <img class="t-avatar" src="Media/Profile Pics/Balaji Darshana.png"
+                                        alt="Balaji Darshana">
+                                    <div class="t-person">
+                                        <strong>Balaji Darshana</strong>
+                                        <span>Lead UX Designer @ Charts Technologies</span>
+                                    </div>
+                                    <a href="#" class="t-redirect-btn" title="View profile">
+                                        <svg viewBox="0 0 14 14">
+                                            <line x1="2" y1="12" x2="12" y2="2" />
+                                            <polyline points="5 2 12 2 12 9" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div><!-- /t-col-left -->
+
+                        <!-- Ã¢â€â‚¬Ã¢â€â‚¬ RIGHT COLUMN (offset down 80px) Ã¢â€â‚¬Ã¢â€â‚¬ -->
+                        <div class="t-col" id="t-col-right">
+
+                            <!-- Card 5 -->
+                            <div class="t-card-v2">
+                                <div class="t-qmark">&ldquo;</div>
+                                <div class="t-body">
+                                    <p>Ajay is magic. In no time, he understood our product, target users, and business
+                                        plan, then went on to build the UI and deliver the work of an entire team on his
+                                        own.</p>
+                                    <p>It's impressive to watch him consistently produce solution after solution without
+                                        giving up. I choose partners based on the people behind them, and it's safe to
+                                        say I go where Ajay goes. I look forward to working with him again.</p>
+                                </div>
+                                <div class="t-card-footer">
+                                    <img class="t-avatar" src="Media/Profile Pics/Paul Robinson.png"
+                                        alt="Paul Robinson">
+                                    <div class="t-person">
+                                        <strong>Paul Robinson</strong>
+                                        <span>Co-Founder of Despond / Managing Director (AUS)</span>
+                                    </div>
+                                    <a href="#" class="t-redirect-btn" title="View profile">
+                                        <svg viewBox="0 0 14 14">
+                                            <line x1="2" y1="12" x2="12" y2="2" />
+                                            <polyline points="5 2 12 2 12 9" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="t-card-v2">
+                                <div class="t-qmark">&ldquo;</div>
+                                <div class="t-body">
+                                    <p>I worked along with Ajay on several projects, and from a tech lead perspective,
+                                        he was someone we could always rely on to keep design and engineering in sync.
+                                        He often handled projects end-to-end on his own, working directly with
+                                        developers, clarifying requirements early, and sorting out edge cases before
+                                        they became blockers.</p>
+                                    <p>He was mindful of timelines, practical about feasibility, and still cared deeply
+                                        about getting the experience right.</p>
+                                    <p>He's calm, responsible, and easy to work with, even during tight deadlines. I'd
+                                        definitely recommend him to any team looking for a Product Designer who works
+                                        naturally with engineering and takes real ownership of his work.</p>
+                                </div>
+                                <div class="t-card-footer">
+                                    <img class="t-avatar" src="Media/Profile Pics/Siva Nesan.png" alt="Siva Nesan">
+                                    <div class="t-person">
+                                        <strong>Siva Nesan</strong>
+                                        <span>Tech Lead &ndash; React Native Developer</span>
+                                    </div>
+                                    <a href="#" class="t-redirect-btn" title="View profile">
+                                        <svg viewBox="0 0 14 14">
+                                            <line x1="2" y1="12" x2="12" y2="2" />
+                                            <polyline points="5 2 12 2 12 9" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="t-viewmore-row" style="margin-top: 4px;">
+                                <a href="#" class="t-viewmore-btn">
+                                    View more
+                                    <svg viewBox="0 0 16 16">
+                                        <line x1="3" y1="13" x2="13" y2="3" />
+                                        <polyline points="6 3 13 3 13 10" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                        </div><!-- /t-col-right -->
+                    </div><!-- /t-grid -->
+
+                </section>
+            </div><!-- /#testimonials-section -->
+
+<!-- INTEREST SECTION -->
+<section id="interest-section" class="section" aria-label="What I'm Into">
+<style>
+/* â”€â”€ Interest layout â”€â”€ */
+#interest-section{background:#0E0F0F;color:#fff;padding:80px 40px 100px;}
+.int-desc{max-width:560px;margin:32px auto 56px;text-align:center;font-family:var(--f-body);font-size:15px;line-height:1.8;color:rgba(255,255,255,0.6);}
+.int-desc p+p{margin-top:18px;}
+.int-modules{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:center;align-items:flex-start;gap:28px;margin-bottom:56px;}
+.int-module{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;flex:0 0 auto;}
+.int-label{font-family:var(--f-body);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+.int-module:hover .kindle-card,.int-module:hover .gb-card,.int-module:hover .tv-card,.int-module:hover .ipod-card{transform:translateY(-8px) scale(1.03);box-shadow:0 20px 48px rgba(0,0,0,.6);}
+.int-cta{display:flex;justify-content:center;}
+.int-cta a{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,0.25);border-radius:100px;padding:13px 28px;font-family:var(--f-body);font-size:14px;color:#fff;text-decoration:none;transition:border-color .3s;}
+.int-cta a:hover{border-color:rgba(255,255,255,.6);}
+
+/* â”€â”€ KINDLE â”€â”€ */
+.kindle-card{width:180px;height:196px;background:#313131;border-radius:24px;padding:9px 9px 24px 9px;display:flex;flex-direction:column;position:relative;transition:transform .25s,box-shadow .25s;box-shadow:inset 0 1px 2px rgba(255,255,255,0.1),0 8px 28px rgba(0,0,0,.45);flex-shrink:0;}
+.kindle-screen{flex:1;background:#f2f2f2;border-radius:12px;border:1.5px solid #111;padding:12px 10px 8px;overflow:hidden;box-shadow:inset 0 0 16px rgba(0,0,0,0.12);}
+.k-title{font-family:Georgia,serif;font-size:10px;font-weight:400;color:#111;line-height:1.2;letter-spacing:0.2px;}
+.k-separator{margin:8px 0;height:4px;}
+.k-separator svg{width:65px;height:100%;display:block;}
+.k-body{font-family:-apple-system,sans-serif;font-size:7px;color:#111;line-height:1.45;font-weight:400;letter-spacing:-0.1px;}
+.kindle-logo{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);font-family:'Brush Script MT',cursive,sans-serif;font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.5px;}
+
+/* â”€â”€ GAMEBOY (Figma-exact) â”€â”€ */
+.gb-card{width:180px;height:196px;background:linear-gradient(180deg,#CCF85D 0%,#B7DD57 51%,#E2FF9A 61%,#CCF85D 66%,#8FAE40 100%);border-radius:24px;padding:9px;display:flex;flex-direction:column;overflow:visible;transition:transform .25s,box-shadow .25s;box-shadow:-4px 10px 16px rgba(180,200,40,0.2),inset -2px -6px 12px rgba(0,0,0,0.3),inset 2px 4px 10px rgba(255,255,255,0.7);flex-shrink:0;position:relative;}
+.gb-screen-wrap{position:relative;width:100%;height:100px;background:linear-gradient(180deg,#CEDF39 0%,#96A420 100%);border-radius:14px;padding:2px 2px 4px 2px;flex-shrink:0;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+.gb-screen-inner{width:100%;height:100%;border-radius:11px;overflow:hidden;position:relative;}
+.gb-screen-img{width:100%;height:100%;object-fit:cover;display:block;}
+.gb-play-lbl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Chivo Mono',monospace;font-size:13px;font-weight:600;color:#fff;letter-spacing:1px;text-shadow:0 1px 4px rgba(0,0,0,0.8);pointer-events:none;}
+.gb-controls-img{width:100%;height:auto;margin-top:8px;object-fit:contain;pointer-events:none;}
+
+/* â”€â”€ TV â”€â”€ */
+.tv-card{width:180px;height:196px;background:#e2e6eb;border-radius:24px;padding:10px;display:flex;flex-direction:column;gap:10px;overflow:hidden;position:relative;transition:transform .25s,box-shadow .25s;box-shadow:inset -2px -4px 10px rgba(0,0,0,0.06),inset 2px 4px 12px rgba(255,255,255,0.9),0 8px 28px rgba(0,0,0,.45);flex-shrink:0;}
+.tv-screen-box{flex:1;background:#111;border-radius:16px;border:3px solid #111;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,0.5);}
+.tv-screen-box img{width:100%;height:100%;object-fit:cover;display:block;}
+.tv-controls{display:flex;align-items:center;gap:7px;padding:0 2px 2px 2px;}
+.tv-btn{border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.1s;}
+.tv-btn:active{transform:scale(0.95);}
+.tv-btn.prev,.tv-btn.next{width:26px;height:22px;background:#e2e6eb;box-shadow:-2px -2px 6px rgba(255,255,255,1),2px 2px 6px rgba(0,0,0,0.12);}
+.tv-btn.power{width:32px;height:24px;background:linear-gradient(145deg,#2a2a2a,#111);border-radius:12px;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15),0 2px 6px rgba(0,0,0,0.3);color:#fff;transition:color 0.2s,box-shadow 0.2s;}
+.tv-btn.power.on{color:#10b981;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15),0 2px 6px rgba(0,0,0,0.3),inset 0 0 6px rgba(16,185,129,0.4);}
+.tv-speaker{flex:1;height:22px;margin-left:3px;background-color:#d4d8de;border-radius:8px;box-shadow:inset 0 2px 5px rgba(0,0,0,0.12),inset 0 -1px 2px rgba(255,255,255,0.6);border:1px solid #c8cbcf;background-image:radial-gradient(#9a9ea5 1.5px,transparent 1.5px);background-size:3.5px 3.5px;background-position:0 0;}
+
+.ipod-card{width:180px;height:196px;background:linear-gradient(145deg,#fa7a30,#e8550d);border-radius:28px;padding:8px 10px 12px 10px;display:flex;flex-direction:column;gap:8px;overflow:hidden;position:relative;transition:transform .25s,box-shadow .25s;box-shadow:inset -2px -4px 12px rgba(0,0,0,0.15),inset 2px 4px 12px rgba(255,255,255,0.4),0 8px 28px rgba(0,0,0,.45);flex-shrink:0;}
+.ipod-screen{background:#fbe6f4;border-radius:18px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;box-shadow:inset 0 2px 8px rgba(0,0,0,0.1);height:96px;}
+.ipod-art-box{width:100%;height:52px;display:flex;justify-content:center;margin-bottom:4px;}
+.ipod-art-box img{height:100%;width:auto;object-fit:contain;}
+.ipod-track{text-align:center;}
+.i-song{font-size:11px;font-weight:700;color:#111;font-family:-apple-system,sans-serif;line-height:1.2;}
+.i-artist{font-size:7.5px;color:#7a6270;font-family:-apple-system,sans-serif;margin-top:2px;}
+.ipod-wheel-wrap{flex:1;display:flex;align-items:center;justify-content:center;}
+.ipod-wheel{position:relative;width:72px;height:72px;border-radius:50%;background:linear-gradient(145deg,#fdfdfd,#dbe0e8);display:flex;align-items:center;justify-content:center;box-shadow:inset -2px -2px 6px rgba(255,255,255,1),inset 2px 2px 8px rgba(0,0,0,0.15),0 4px 10px rgba(0,0,0,0.2);}
+.ipod-center{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,#fa7a30,#e8550d);box-shadow:inset 0 2px 4px rgba(255,255,255,0.4),inset 0 -2px 6px rgba(0,0,0,0.2),0 2px 5px rgba(0,0,0,0.2);}
+.iw-lbl{position:absolute;font-weight:700;color:#5a6270;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.iw-top{top:6px;font-size:7.5px;font-family:-apple-system,sans-serif;letter-spacing:0.5px;}
+.iw-bottom{bottom:7px;}
+.iw-left{left:6px;}
+.iw-right{right:6px;}
+
+/* â”€â”€ OVERLAYS â”€â”€ */
+.int-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+.int-overlay.open{display:flex;}
+.int-popup{position:relative;max-height:92vh;overflow:auto;}
+.int-close{position:absolute;top:-14px;right:-14px;width:30px;height:30px;border-radius:50%;background:#333;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1;}
+
+/* â”€â”€ KINDLE POPUP â”€â”€ */
+.kindle-popup{width:680px;max-width:94vw;background:#e8e4de;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;font-family:Georgia,serif;}
+.kp-screen{display:flex;min-height:400px;}
+.kp-list{width:230px;background:#ddd9d3;padding:22px 14px;overflow-y:auto;border-right:1px solid #ccc9c4;flex-shrink:0;}
+.kp-list h3{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:14px;font-family:var(--f-body);}
+.book-item{padding:9px 11px;border-radius:7px;cursor:pointer;margin-bottom:3px;font-size:12px;color:#333;line-height:1.4;transition:background .2s;}
+.book-item:hover,.book-item.active{background:#c8c4be;color:#111;}
+.kp-content{flex:1;padding:28px 24px;overflow-y:auto;}
+#book-title{font-size:21px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:5px;}
+#book-author{font-size:12px;color:#888;margin-bottom:22px;font-family:var(--f-body);}
+#book-desc{font-size:14px;color:#333;line-height:1.9;}
+.kp-bar{height:42px;background:#1c1c1c;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kp-bar span{font-size:9px;color:rgba(255,255,255,.45);letter-spacing:2px;font-family:var(--f-body);}
+
+/* â”€â”€ GAMEBOY POPUP â”€â”€ */
+.gbp-wrap{background:#9BD423;border-radius:22px 22px 70px 22px;padding:18px 22px 26px;width:320px;position:relative;}
+.gbp-screen-wrap{background:#1a2a1a;border-radius:8px;padding:10px;border:4px solid #111;margin-bottom:14px;overflow:hidden;}
+.gbp-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.gbp-hud span{font-size:10px;font-family:monospace;color:#4aff4a;}
+#snake-canvas{display:block;border-radius:3px;}
+.gbp-controls{display:flex;align-items:center;justify-content:space-between;padding:0 8px;margin-bottom:11px;}
+.gbp-dpad{display:grid;grid-template-columns:repeat(3,34px);grid-template-rows:repeat(3,34px);gap:2px;}
+.gbp-dpad button{background:#222;border:none;border-radius:4px;color:#9BD423;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.gbp-dpad .empty{background:transparent;pointer-events:none;}
+.gbp-ab{display:flex;gap:9px;align-items:center;}
+.btn-a{width:40px;height:40px;border-radius:50%;border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;background:#e74c3c;}
+.btn-b{width:40px;height:40px;border-radius:50%;border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;background:#3498db;}
+.gbp-bottom{display:flex;justify-content:center;gap:12px;margin-bottom:12px;}
+.gbp-bottom button{background:#333;border:none;border-radius:6px;padding:5px 14px;color:#9BD423;font-size:10px;font-family:monospace;cursor:pointer;}
+.gbp-gamelist{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.gbp-gamelist span{background:rgba(0,0,0,.25);border-radius:6px;padding:5px 8px;font-size:9.5px;font-family:monospace;color:#1a2a00;}
+
+/* â”€â”€ TV POPUP â”€â”€ */
+.tvp-wrap{background:#c0c0c0;border-radius:16px;padding:20px;width:520px;max-width:94vw;position:relative;}
+.tvp-antenna{position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:3px;height:30px;background:#aaa;}
+.tvp-body{display:flex;gap:12px;}
+.tvp-main{flex:1;overflow:hidden;}
+.tvp-screen{background:#000;border-radius:8px;overflow:hidden;aspect-ratio:16/10;margin-bottom:11px;}
+.tvp-screen img{width:100%;height:100%;object-fit:cover;transition:opacity .4s;}
+#tv-movie-label{text-align:center;font-size:12px;color:#333;font-family:var(--f-body);margin-bottom:11px;}
+.tvp-btns{display:flex;justify-content:center;gap:14px;}
+.tvp-btns button{width:40px;height:36px;border-radius:7px;background:#aaa;border:2px solid #888;cursor:pointer;font-size:13px;color:#333;font-weight:700;transition:transform .1s;}
+.tvp-btns button:active{transform:scale(.93);}
+.tvp-power{background:#e8780a!important;color:#fff!important;border-color:#c06000!important;}
+.tvp-speaker{width:30px;display:flex;flex-direction:column;gap:5px;justify-content:center;flex-shrink:0;}
+.tvp-sp{height:3px;background:#aaa;border-radius:2px;}
+.tvp-movie-list{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.tvp-movie-item{background:rgba(0,0,0,.08);border-radius:8px;padding:7px 9px;}
+.mv-title{font-size:11px;font-weight:600;color:#1a1a1a;font-family:var(--f-body);}
+.mv-stars{font-size:10px;color:#e8780a;}
+
+/* â”€â”€ IPOD POPUP â”€â”€ */
+.ipp-wrap{background:#FF6B1A;border-radius:28px;padding:18px 18px 26px;width:300px;position:relative;}
+.ipp-screen{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:13px;}
+.ipp-screen iframe{display:block;}
+.ipp-btns{display:flex;justify-content:space-between;width:100%;padding:0 6px;margin-bottom:10px;}
+.ipp-btns button{background:rgba(0,0,0,.2);border:none;border-radius:8px;width:46px;height:34px;color:#fff;font-size:15px;cursor:pointer;}
+.ipp-wheel-ring{width:110px;height:110px;border-radius:50%;background:rgba(0,0,0,.2);display:grid;place-items:center;margin:0 auto;}
+.ipp-wheel-center{width:48px;height:48px;border-radius:50%;background:#FF6B1A;border:3px solid rgba(255,255,255,.35);}
+
+@media(max-width:768px){
+  .int-modules{flex-wrap:wrap;gap:20px;}
+  .tv-card{margin-top:0;}
+}
+</style>
+<div class="section__bar">
+  <span class="section__num">07</span>
+  <span class="section__name">//WHAT I'M INTO</span>
+  <span class="section__total">TOT. 09</span>
+</div>
+<h2 class="section__title">What i&rsquo;m into</h2>
+<div class="int-desc">
+  <p>Beyond the pixels and the prototypes, my design is fuelled by a constant stream of high-fidelity inputs. Whether I&rsquo;m analysing the deep metaphors of an Art Film, exploring the immersive mechanics of AAA and Indie games, or getting lost in the rhythm of a curated playlist, I&rsquo;m always looking for that next spark of inspiration.</p>
+  <p>When I&rsquo;m not behind a screen, you&rsquo;ll find me at the intersection of discipline and curiosity &mdash; training for marathons, hitting the badminton court, or diving into a book on human behaviour. For me, life is an endless loop of learning random things and finding the art in every detail.</p>
+</div>
+<div class="int-modules">
+  <div class="int-module" onclick="openInterestPopup('books')">
+    <div class="kindle-card">
+      <div class="kindle-screen">
+        <div class="k-title">KNOWLEDGE<br>IN THE<br>HEAD AND<br>IN THE WORLD</div>
+        <div class="k-separator">
+           <svg viewBox="0 0 100 4" preserveAspectRatio="none"><line x1="2" y1="2" x2="98" y2="2" stroke="#111" stroke-width="0.8"/><polygon points="2,0 4,2 2,4 0,2" fill="#111"/><polygon points="98,0 100,2 98,4 96,2" fill="#111"/></svg>
+        </div>
+        <div class="k-body">Every day we are confronted by numerous objects, devices, and services, each of which requires us to behave or act in some particular manner. Overall, we manage quite well. Our knowledge is often quite incomplete, ambiguous, or</div>
+      </div>
+      <div class="kindle-logo">E-reader</div>
+    </div>
+    <span class="int-label">Books</span>
+  </div>
+  <div class="int-module">
+    <div class="gb-card">
+      <div class="gb-screen-wrap">
+        <div class="gb-screen-inner">
+          <img class="gb-screen-img" src="Media/gameboy-game.gif" alt="retro game">
+          <span class="gb-play-lbl">PLAY</span>
+        </div>
+      </div>
+      <img class="gb-controls-img" src="Media/Controller.svg" alt="Game Boy controls">
+    </div>
+    <span class="int-label">Games</span>
+  </div>
+  <div class="int-module">
+    <div class="tv-card">
+      <div class="tv-screen-box">
+        <img id="tv-screen-img" src="Media/Gifs/TV (OFF).png" alt="movie scene">
+      </div>
+      <div class="tv-controls">
+        <button class="tv-btn prev" onclick="prevTvGif()">
+          <svg viewBox="0 0 24 24" width="12" height="12"><path d="M11 12L18 18V6L11 12Z" fill="#111"/><path d="M4 12L11 18V6L4 12Z" fill="#111"/></svg>
+        </button>
+        <button id="tv-btn-power" class="tv-btn power" onclick="toggleTvPower()">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v10M17.66 7.34a9 9 0 1 1-11.32 0"/></svg>
+        </button>
+        <button class="tv-btn next" onclick="nextTvGif()">
+          <svg viewBox="0 0 24 24" width="12" height="12"><path d="M13 12L6 6v12l7-6z" fill="#111"/><path d="M20 12L13 6v12l7-6z" fill="#111"/></svg>
+        </button>
+        <div class="tv-speaker"></div>
+      </div>
+    </div>
+    <span class="int-label">Movies</span>
+  </div>
+  <div class="int-module">
+    <div class="ipod-card">
+      <div class="ipod-screen">
+        <!-- Hidden Spotify Embed -->
+        <div style="position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
+           <div id="spotify-embed"></div>
+        </div>
+
+        <div id="ipod-play-view" style="display:flex; flex-direction:column; align-items:center; width:100%; height:100%;">
+          <div class="ipod-art-box"><img id="ipod-art-img" src="Media/ipod-albums.png" alt="albums"></div>
+          <div class="ipod-track">
+            <div class="i-song" id="ipod-song-title">The War Cry</div>
+            <div class="i-artist" id="ipod-song-artist">Jakes Bejoy</div>
+          </div>
+        </div>
+        <div id="ipod-menu-view" style="display:none; width:100%; height:100%; flex-direction:column; padding:0 2px;">
+           <div style="font-size:10px; font-weight:800; border-bottom:1px solid rgba(0,0,0,0.1); margin-bottom:4px; padding-bottom:2px; color:#111;">My Playlist</div>
+           <div id="ipod-menu-list" style="overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:2px;"></div>
+        </div>
+      </div>
+      <div class="ipod-wheel-wrap">
+        <div class="ipod-wheel">
+          <div class="iw-lbl iw-top" onclick="toggleIpodMenu()" style="cursor:pointer; pointer-events:auto; padding:4px;">MENU</div>
+          <div class="iw-lbl iw-left" onclick="prevIpodSong()" style="cursor:pointer; pointer-events:auto; padding:4px;">
+            <svg viewBox="0 0 24 24" width="10" height="10"><path d="M11 12L18 18V6L11 12Z" fill="#5a6270"/><path d="M4 12L11 18V6L4 12Z" fill="#5a6270"/></svg>
+          </div>
+          <div class="iw-lbl iw-right" onclick="nextIpodSong()" style="cursor:pointer; pointer-events:auto; padding:4px;">
+            <svg viewBox="0 0 24 24" width="10" height="10"><path d="M13 12L6 6v12l7-6z" fill="#5a6270"/><path d="M20 12L13 6v12l7-6z" fill="#5a6270"/></svg>
+          </div>
+          <div class="iw-lbl iw-bottom" onclick="toggleIpodPlay()" style="cursor:pointer; pointer-events:auto; padding:4px; display:flex; align-items:center; justify-content:center;">
+             <svg id="ipod-play-icon" viewBox="0 0 24 24" width="10" height="10"><path d="M8 5v14l11-7z" fill="#5a6270"/></svg>
+          </div>
+          <div class="ipod-center" onclick="selectIpodMenu()" style="cursor:pointer; pointer-events:auto;"></div>
+        </div>
+      </div>
+    </div>
+    <span class="int-label">Music</span>
+  </div>
+</div>
+<div class="int-cta">
+  <a href="#">Know more <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="12" y2="2"/><polyline points="5 2 12 2 12 9"/></svg></a>
+</div>
+</section>
+<!-- BOOKS POPUP -->
+<div class="int-overlay" id="popup-books">
+  <div class="int-popup kindle-popup">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="kp-screen">
+      <div class="kp-list">
+        <h3>My Library</h3>
+        <div class="book-item active" onclick="showBook(0)">The Design of Everyday Things</div>
+        <div class="book-item" onclick="showBook(1)">Don&rsquo;t Make Me Think</div>
+        <div class="book-item" onclick="showBook(2)">Thinking, Fast and Slow</div>
+        <div class="book-item" onclick="showBook(3)">Hooked</div>
+        <div class="book-item" onclick="showBook(4)">Sprint</div>
+        <div class="book-item" onclick="showBook(5)">Creative Confidence</div>
+      </div>
+      <div class="kp-content">
+        <div id="book-title"></div>
+        <div id="book-author"></div>
+        <div id="book-desc"></div>
+      </div>
+    </div>
+    <div class="kp-bar"><span>E-READER &nbsp;&bull;&nbsp; YOUR LIBRARY</span></div>
+  </div>
+</div>
+<!-- GAMES POPUP -->
+<div class="int-overlay" id="popup-games">
+  <div class="int-popup gbp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="gbp-screen-wrap">
+      <div class="gbp-hud"><span>SNAKE</span><span id="snake-score">SCORE: 0</span></div>
+      <canvas id="snake-canvas" width="200" height="200"></canvas>
+    </div>
+    <div class="gbp-controls">
+      <div class="gbp-dpad">
+        <div class="empty"></div><button onclick="gbDir('up')">&#9650;</button><div class="empty"></div>
+        <button onclick="gbDir('left')">&#9664;</button><div class="empty" style="background:#444;border-radius:50%;"></div><button onclick="gbDir('right')">&#9654;</button>
+        <div class="empty"></div><button onclick="gbDir('down')">&#9660;</button><div class="empty"></div>
+      </div>
+      <div class="gbp-ab">
+        <button class="btn-b" onclick="gbRestart()">B</button>
+        <button class="btn-a" onclick="gbRestart()">A</button>
+      </div>
+    </div>
+    <div class="gbp-bottom">
+      <button onclick="gbRestart()">START</button>
+      <button onclick="closeInterestPopup()">SELECT</button>
+    </div>
+    <div class="gbp-gamelist">
+      <span>Hollow Knight</span><span>Celeste</span>
+      <span>Stardew Valley</span><span>Among Us</span>
+      <span>Minecraft</span><span>Undertale</span>
+    </div>
+  </div>
+</div>
+<!-- MOVIES POPUP -->
+<div class="int-overlay" id="popup-movies">
+  <div class="int-popup tvp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="tvp-antenna"></div>
+    <div class="tvp-body">
+      <div class="tvp-main">
+        <div class="tvp-screen"><img id="tv-poster" src="" alt="movie"></div>
+        <div id="tv-movie-label"></div>
+        <div class="tvp-btns">
+          <button onclick="prevMovie()">&#9664;&#9664;</button>
+          <button class="tvp-power">&#9679;</button>
+          <button onclick="nextMovie()">&#9654;&#9654;</button>
+        </div>
+      </div>
+      <div class="tvp-speaker">
+        <div class="tvp-sp"></div><div class="tvp-sp"></div><div class="tvp-sp"></div>
+        <div class="tvp-sp"></div><div class="tvp-sp"></div><div class="tvp-sp"></div>
+      </div>
+    </div>
+    <div class="tvp-movie-list">
+      <div class="tvp-movie-item"><div class="mv-title">Interstellar</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Inception</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Parasite</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Whiplash</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">The Dark Knight</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+      <div class="tvp-movie-item"><div class="mv-title">Her</div><div class="mv-stars">&#9733;&#9733;&#9733;&#9733;</div></div>
+    </div>
+  </div>
+</div>
+<!-- MUSIC POPUP -->
+<div class="int-overlay" id="popup-music">
+  <div class="int-popup ipp-wrap">
+    <button class="int-close" onclick="closeInterestPopup()">&times;</button>
+    <div class="ipp-screen">
+      <iframe id="spotify-frame" style="border-radius:12px;" width="100%" height="380" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    <div class="ipp-btns">
+      <button>&#9664;&#9664;</button>
+      <button style="font-size:18px;">&#9654;</button>
+      <button>&#9654;&#9654;</button>
+    </div>
+    <div class="ipp-wheel-ring"><div class="ipp-wheel-center"></div></div>
+  </div>
+</div>
+
+
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     FAQ
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+            <section class="section" aria-label="FAQ">
+                <div class="section__bar">
+                    <span class="section__num">08</span>
+                    <span class="section__name">//FAQ</span>
+                    <span class="section__total">TOT. 04</span>
+                </div>
+                <h2 class="section__title">FAQ</h2>
+                <div class="faq__wrap">
+                    <img src="Media/FAQ Image.png" alt="FAQ illustration" class="faq__img">
+                    <div class="faq-list">
+                        <details class="faq-item">
+                            <summary>What design tools do you use?</summary>
+                            <p class="faq-body">I primarily use Figma for UI/UX design Ã¢â‚¬â€ wireframes,
+                                high-fidelity
+                                designs, and interactive prototypes.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Do you work with developers?</summary>
+                            <p class="faq-body">Absolutely. I create detailed handoffs with specs, assets, and
+                                documentation so development goes smoothly.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>What is your design process?</summary>
+                            <p class="faq-body">Research Ã¢â€ â€™ Define Ã¢â€ â€™ Ideate Ã¢â€ â€™ Design Ã¢â€ â€™
+                                Prototype Ã¢â€ â€™ Test Ã¢â€ â€™ Iterate. I
+                                validate assumptions early and often.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Are you open to freelance work?</summary>
+                            <p class="faq-body">Yes Ã¢â‚¬â€ I'm currently open to new projects. Reach out and let's
+                                talk about
+                                what you're building.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     CONTACT / FOOTER
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+        <footer class="footer" id="contact" aria-label="Contact">
+            <img src="Media/background (bottom).png" alt="" class="footer__bg" aria-hidden="true">
+            <div class="footer__inner">
+                <p class="footer__pre">Have a project in mind?</p>
+                <h2 class="footer__email">archudhanajay369<br>@gmail.com</h2>
+                <div class="footer__actions">
+                    <button class="footer-btn footer-btn--copy" id="copy-btn" aria-label="Copy email address">Copy
+                        Email</button>
+                    <a href="mailto:archudhanajay369@gmail.com" class="footer-btn footer-btn--hello">Say Hello</a>
+                </div>
+                <nav class="footer__socials" aria-label="Social links">
+                    <a href="#" class="footer__social">Twitter</a>
+                    <a href="#" class="footer__social">Dribbble</a>
+                    <a href="#" class="footer__social">LinkedIn</a>
+                    <a href="#" class="footer__social">Instagram</a>
+                    <a href="#" class="footer__social">GitHub</a>
+                </nav>
+            </div>
+        </footer>
+
+        <script>
+            'use strict';
+
+            /* Ã¢â€â‚¬Ã¢â€â‚¬ Navbar scroll Ã¢â€â‚¬Ã¢â€â‚¬ */
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 10);
+            }, { passive: true });
+
+            /* Ã¢â€â‚¬Ã¢â€â‚¬ Hamburger toggle Ã¢â€â‚¬Ã¢â€â‚¬ */
+            const hamBtn = document.getElementById('ham-btn');
+            const drawer = document.getElementById('nav-drawer');
+            hamBtn.addEventListener('click', () => {
+                const open = hamBtn.getAttribute('aria-expanded') === 'true';
+                hamBtn.setAttribute('aria-expanded', String(!open));
+                drawer.setAttribute('aria-hidden', String(open));
+                drawer.classList.toggle('open', !open);
+            });
+            drawer.querySelectorAll('.nav__link').forEach(l => l.addEventListener('click', () => {
+                hamBtn.setAttribute('aria-expanded', 'false');
+                drawer.setAttribute('aria-hidden', 'true');
+                drawer.classList.remove('open');
+            }));
+
+            /* Ã¢â€â‚¬Ã¢â€â‚¬ Testimonial slider Ã¢â€â‚¬Ã¢â€â‚¬ */
+            const cards = document.querySelectorAll('.t-card');
+            let cur = 0;
+            const show = i => {
+                cards[cur].classList.remove('active');
+                cur = (i + cards.length) % cards.length;
+                cards[cur].classList.add('active');
+            };
+            document.getElementById('t-prev').addEventListener('click', () => show(cur - 1));
+            document.getElementById('t-next').addEventListener('click', () => show(cur + 1));
+
+            /* Ã¢â€â‚¬Ã¢â€â‚¬ Copy email Ã¢â€â‚¬Ã¢â€â‚¬ */
+            document.getElementById('copy-btn').addEventListener('click', () => {
+                navigator.clipboard.writeText('archudhanajay369@gmail.com').then(() => {
+                    const b = document.getElementById('copy-btn');
+                    b.textContent = 'Copied Ã¢Å“â€œ';
+                    setTimeout(() => { b.textContent = 'Copy Email'; }, 2000);
+                });
+            });
+        </script>
+
+        <!-- Custom Cursor HTML -->
+        <div class="custom-cursor" id="custom-cursor">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 2.5L19.5 10L12.5 12.5L10 19.5L4.5 2.5Z" fill="#3DDD84" stroke="white" stroke-width="1.5"
+                    stroke-linejoin="round" />
+            </svg>
+            <div class="cursor-label" id="cursor-label"></div>
+        </div>
+
+        <script>
+            /* -- Custom Cursor Script (Inlined to prevent cache issues) -- */
+            const customCursor = document.getElementById('custom-cursor');
+            const customCursorLabel = document.getElementById('cursor-label');
+
+            if (customCursor && customCursorLabel) {
+                let mouseX = 0;
+                let mouseY = 0;
+
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    customCursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                    if (customCursor.style.opacity === '0' || customCursor.style.opacity === '') {
+                        customCursor.style.opacity = '1';
+                    }
+                });
+
+                document.addEventListener('mouseout', (e) => {
+                    if (!e.relatedTarget && !e.toElement) {
+                        customCursor.style.opacity = '0';
+                    }
+                });
+                document.addEventListener('mouseenter', () => {
+                    customCursor.style.opacity = '1';
+                });
+
+                const hoverElements = document.querySelectorAll('img, a, button, summary, [data-cursor]');
+
+                hoverElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        let text = '';
+                        if (el.hasAttribute('data-cursor')) {
+                            text = el.getAttribute('data-cursor');
+                        } else if (el.tagName.toLowerCase() === 'img') {
+                            text = 'Hold';
+                        }
+
+                        if (text) {
+                            customCursorLabel.textContent = text;
+                            customCursorLabel.classList.add('show');
+                        } else {
+                            customCursorLabel.classList.remove('show');
+                        }
+                    });
+
+                    el.addEventListener('mouseleave', () => {
+                        customCursorLabel.classList.remove('show');
+                    });
+                });
+            }
+        </script>
+
+        <!-- External Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+        <!-- External Scripts -->
+        <script src="interest.js"></script>
+        <script src="script.js"></script>
+</body>
+
+</html>
