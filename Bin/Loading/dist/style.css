@@ -1,0 +1,195 @@
+/*
+ * Page Loader V1 - Counter
+ * © 2026 Intellaris Pvt. Ltd. All rights reserved.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#counter {
+    font-size: 15rem;
+    font-weight: 900;
+    color: white;
+}
+
+#progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    background-color: white;
+    width: 0%;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dc2626; /* Premium Red Background */
+    position: relative;
+}
+
+.logo-container {
+    position: fixed;
+    top: 2rem;
+    left: 3rem;
+    z-index: 100;
+}
+
+.logo-container img {
+    height: 40px;
+    width: auto;
+}
+
+.source-link {
+    position: fixed;
+    top: 2rem;
+    right: 3rem;
+    z-index: 100;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.demo-link {
+    position: fixed;
+    bottom: 2rem;
+    left: 3rem;
+    z-index: 100;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.copyright {
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    z-index: 100;
+    color: white;
+    font-weight: 400;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Underline Animation */
+.underline-hover {
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.underline-hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.underline-hover:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.main-button {
+    font-size: 4rem;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+.main-button::after {
+    height: 4px;
+    bottom: -6px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .source-link, .demo-link {
+        display: none;
+    }
+
+    .logo-container {
+        top: 1.5rem;
+        left: 1.5rem;
+    }
+
+    .logo-container img {
+        height: 30px;
+    }
+
+    .copyright {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 0.8rem;
+    }
+
+    #counter {
+        font-size: 8rem;
+    }
+
+    .main-button {
+        font-size: 2rem;
+        text-align: center;
+        padding: 0 2rem;
+    }
+
+    #progress-bar {
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #counter {
+        font-size: 5rem;
+    }
+
+    .main-button {
+        font-size: 1.5rem;
+    }
+}
+
+/* Disable hover effects on touch devices or small screens */
+@media (hover: none), (max-width: 1024px) {
+    .underline-hover:hover::after {
+        transform: scaleX(0) !important;
+    }
+}
