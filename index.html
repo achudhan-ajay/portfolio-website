@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -902,6 +902,8 @@
             margin: 0 auto;
             display: block;
             border-radius: var(--r-card);
+            max-height: 70vh;
+            object-fit: contain;
         }
 
         /* =====================================================================
@@ -1381,14 +1383,21 @@
         }
 
         .footer__social {
-            font-family: var(--f-body);
-            font-size: 15px;
-            font-weight: 500;
             color: var(--text);
             display: flex;
             align-items: center;
-            gap: 8px;
             text-decoration: none;
+        }
+
+        .footer__social img {
+            width: 32px;
+            height: 32px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .footer__social:hover img {
+            transform: translateY(-3px);
+            opacity: 0.8;
         }
 
         .footer__copy {
@@ -1953,7 +1962,7 @@
                                 ensure seamless development handoffs under tight business constraints.</p>
                         </div>
                         <div class="exp-right">
-                            <p class="exp-type">2024 - 2026</p>
+                            <p class="exp-type">2024 &ndash; PRESENT</p>
                             <p class="exp-loc">(1.5 YEARS)</p>
                         </div>
                     </div>
@@ -2016,8 +2025,7 @@
                             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg';">
                         <h3 class="phil-quote">Design is not just what it looks like<br>and feels like. Design is how it
                             works.<br><span
-                                style="font-size: 12px; font-family: var(--f-mono); color: var(--muted); letter-spacing: 0.1em; display: inline-block; margin-top: 16px;">-
-                                STEVE JOB</span></h3>
+                                style="font-size: 12px; font-family: var(--f-mono); color: var(--muted); letter-spacing: 0.1em; display: inline-block; margin-top: 16px;">&ndash; Steve Jobs</span></h3>
                     </div>
                     <button class="phil-btn phil-btn-next">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -2547,7 +2555,7 @@
   <span class="section__name">//INTEREST</span>
   <span class="section__total">TOT. 09</span>
 </div>
-<h2 class="section__title">What i&rsquo;m into</h2>
+<h2 class="section__title">What I'm Into</h2>
 <div class="int-desc">
   <p>Beyond the pixels and the prototypes, my design is fuelled by a constant stream of high-fidelity inputs. Whether I&rsquo;m analysing the deep metaphors of an Art Film, exploring the immersive mechanics of AAA and Indie games, or getting lost in the rhythm of a curated playlist, I&rsquo;m always looking for that next spark of inspiration.</p>
   <p>When I&rsquo;m not behind a screen, you&rsquo;ll find me at the intersection of discipline and curiosity &mdash; training for marathons, hitting the badminton court, or diving into a book on human behaviour. For me, life is an endless loop of learning random things and finding the art in every detail.</p>
@@ -2809,16 +2817,16 @@
                     </div>
                 </div>
                 <nav class="footer__socials">
-                    <a href="#" class="footer__social">LinkedIn <img src="Media/Icons/Icon-Linkedin.svg" alt="LinkedIn" width="24" height="24"></a>
-                    <a href="#" class="footer__social">Behance <img src="Media/Icons/Icon-Behance.svg" alt="Behance" width="24" height="24"></a>
-                    <a href="#" class="footer__social">Dribbble <img src="Media/Icons/Icon-Dribbble.svg" alt="Dribbble" width="24" height="24"></a>
-                    <a href="#" class="footer__social">Whatsapp <img src="Media/Icons/Icon-Whatsapp.svg" alt="Whatsapp" width="24" height="24"></a>
-                    <a href="#" class="footer__social">Instagram <img src="Media/Icons/Icon-Instagram.svg" alt="Instagram" width="24" height="24"></a>
-                    <a href="#" class="footer__social">Upwork <img src="Media/Icons/Icon-Upwork.svg" alt="Upwork" width="24" height="24"></a>
+                    <a href="https://linkedin.com" class="footer__social" title="LinkedIn" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Linkedin.svg" alt="LinkedIn"></a>
+                    <a href="https://behance.net" class="footer__social" title="Behance" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Behance.svg" alt="Behance"></a>
+                    <a href="https://dribbble.com" class="footer__social" title="Dribbble" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Dribbble.svg" alt="Dribbble"></a>
+                    <a href="https://wa.me" class="footer__social" title="Whatsapp" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Whatsapp.svg" alt="Whatsapp"></a>
+                    <a href="https://instagram.com" class="footer__social" title="Instagram" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Instagram.svg" alt="Instagram"></a>
+                    <a href="https://upwork.com" class="footer__social" title="Upwork" target="_blank" rel="noopener"><img src="Media/Icons/Icon-Upwork.svg" alt="Upwork"></a>
                 </nav>
             </div>
             <div class="footer__copy">
-                <span>Made with AI</span> | <span>All Copy Rights Reserved</span>
+                <span>Made with AI</span> | <span>All Copyrights Reserved</span>
             </div>
         </footer>
 
