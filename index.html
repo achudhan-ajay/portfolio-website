@@ -2796,8 +2796,6 @@
         </main>
 
         <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-     CONTACT / FOOTER
-Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
         <!-- CONTACT / FOOTER -->
         <footer class="footer" id="contact" aria-label="Contact">
             <div class="footer__inner">
@@ -2984,6 +2982,144 @@
             window.addEventListener('load', () => {
                 startLoader();
             });
+        </script>
+
+        <!-- GSAP ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+        <script>
+        /* ============================================================
+           SCROLL ANIMATIONS — GSAP ScrollTrigger
+        ============================================================ */
+        (function () {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Respect reduced-motion preference
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const EASE_OUT  = 'power3.out';
+            const EASE_BACK = 'back.out(1.4)';
+            const DUR       = 0.75;
+            const DUR_SLOW  = 1.0;
+
+            /* Animate a single element when it enters the viewport */
+            function reveal(el, vars, triggerVars = {}) {
+                if (!el) return;
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 88%',
+                        toggleActions: 'play none none reverse',
+                        ...triggerVars
+                    },
+                    ...vars
+                });
+            }
+
+            /* Stagger a list of elements when the first enters the viewport */
+            function staggerReveal(els, vars, stagger = 0.12, triggerVars = {}) {
+                if (!els || !els.length) return;
+                gsap.from(els, {
+                    scrollTrigger: {
+                        trigger: els[0],
+                        start: 'top 88%',
+                        toggleActions: 'play none none reverse',
+                        ...triggerVars
+                    },
+                    stagger,
+                    ...vars
+                });
+            }
+
+            /* ── 1. SECTION BARS ─ split slide from both edges ── */
+            document.querySelectorAll('.section__bar').forEach(bar => {
+                const tl = gsap.timeline({
+                    scrollTrigger: { trigger: bar, start: 'top 92%', toggleActions: 'play none none reverse' }
+                });
+                const num   = bar.querySelector('.section__num');
+                const name  = bar.querySelector('.section__name');
+                const total = bar.querySelector('.section__total');
+                if (num)   tl.from(num,   { x: -28, opacity: 0, duration: 0.5, ease: EASE_OUT }, 0);
+                if (name)  tl.from(name,  { y: -12, opacity: 0, duration: 0.5, ease: EASE_OUT }, 0.08);
+                if (total) tl.from(total, { x: 28, opacity: 0, duration: 0.5, ease: EASE_OUT }, 0);
+            });
+
+            /* ── 2. SECTION TITLES ─ blur-up reveal ── */
+            document.querySelectorAll('.section__title').forEach(title => {
+                reveal(title, {
+                    y: 40, opacity: 0, filter: 'blur(8px)',
+                    duration: DUR_SLOW, ease: EASE_OUT, clearProps: 'filter'
+                });
+            });
+
+            /* ── 3. ABOUT ME ─ text left, collage right ── */
+            reveal(document.querySelector('.about__body'),
+                { x: -50, opacity: 0, duration: DUR_SLOW, ease: EASE_OUT });
+            reveal(document.querySelector('.about__collage'),
+                { x: 50, opacity: 0, duration: DUR_SLOW, ease: EASE_OUT, delay: 0.15 });
+
+            /* ── 4. PROJECT / BENTO CARDS ─ stagger fade-up ── */
+            const projCards = document.querySelectorAll('.bento-card, .case-card, .proj-card, [class*="bento-item"]');
+            staggerReveal(projCards,
+                { y: 60, opacity: 0, scale: 0.96, duration: DUR_SLOW, ease: EASE_OUT }, 0.10);
+
+            /* ── 5. SKILLS IMAGE ─ scale-in + parallax drift ── */
+            const skillsImg = document.querySelector('.skills-img');
+            if (skillsImg) {
+                reveal(skillsImg, { scale: 0.88, opacity: 0, y: 30, duration: DUR_SLOW, ease: EASE_OUT });
+                gsap.to(skillsImg, {
+                    yPercent: -8, ease: 'none',
+                    scrollTrigger: { trigger: skillsImg, start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+                });
+            }
+
+            /* ── 6. EXPERIENCE ROWS ─ slide from left, staggered ── */
+            const expRows = document.querySelectorAll('.exp-row');
+            expRows.forEach((row, i) => {
+                reveal(row, { x: -40, opacity: 0, duration: DUR_SLOW, ease: EASE_OUT, delay: i * 0.08 },
+                    { start: 'top 86%' });
+            });
+
+            /* ── 7. PHILOSOPHY CARD ─ zoom + slight rotation ── */
+            reveal(document.querySelector('.philosophy__card'),
+                { scale: 0.85, opacity: 0, rotation: -1.5, duration: DUR_SLOW, ease: EASE_BACK });
+            document.querySelectorAll('.phil-btn').forEach((btn, i) => {
+                reveal(btn, { x: i === 0 ? -20 : 20, opacity: 0, duration: 0.6, ease: EASE_OUT, delay: 0.2 });
+            });
+
+            /* ── 8. TESTIMONIAL CARDS ─ cascade up, left then right ── */
+            const tLeft  = document.querySelector('#t-col-left');
+            const tRight = document.querySelector('#t-col-right');
+            if (tLeft)  staggerReveal(tLeft.querySelectorAll('.t-card-v2'),
+                { y: 70, opacity: 0, duration: DUR_SLOW, ease: EASE_OUT }, 0.18,
+                { trigger: tLeft, start: 'top 86%' });
+            if (tRight) staggerReveal(tRight.querySelectorAll('.t-card-v2'),
+                { y: 70, opacity: 0, duration: DUR_SLOW, ease: EASE_OUT }, 0.18,
+                { trigger: tRight, start: 'top 82%' });
+
+            /* ── 9. INTEREST MODULES ─ spring pop-up ── */
+            staggerReveal(document.querySelectorAll('.int-module'),
+                { y: 50, opacity: 0, scale: 0.92, duration: DUR_SLOW, ease: EASE_BACK }, 0.10);
+
+            /* ── 10. FAQ ITEMS ─ slide from left ── */
+            staggerReveal(document.querySelectorAll('details, .faq__item'),
+                { x: -28, opacity: 0, duration: 0.65, ease: EASE_OUT }, 0.09);
+
+            /* ── 11. FOOTER ELEMENTS ─ sequential fade-up ── */
+            ['.footer__tagline', '.footer__cta-group', '.footer__email-display',
+             '.footer__socials', '.footer__copy'].forEach((sel, i) => {
+                const el = document.querySelector(sel);
+                if (el) reveal(el, { y: 28, opacity: 0, duration: 0.7, ease: EASE_OUT, delay: i * 0.10 },
+                    { start: 'top 96%' });
+            });
+
+            /* ── 12. MISC CTA ROWS ─ fade-up ── */
+            ['.hero__actions', '.t-viewmore-row', '.int-cta'].forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) reveal(el, { y: 22, opacity: 0, duration: 0.6, ease: EASE_OUT });
+            });
+
+        })();
         </script>
 </body>
 
