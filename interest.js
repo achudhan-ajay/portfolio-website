@@ -1,9 +1,9 @@
-/* ============================================================
-   INTEREST SECTION — Interactive Modules
-   Books · Games · Movies · Music
+﻿/* ============================================================
+   INTEREST SECTION â€” Interactive Modules
+   Books Â· Games Â· Movies Â· Music
    ============================================================ */
 
-// ── Popup Management ──────────────────────────────────────
+// â”€â”€ Popup Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function openInterestPopup(id) {
   document.querySelectorAll('.int-overlay').forEach(el => el.classList.remove('open'));
   const overlay = document.getElementById('popup-' + id);
@@ -27,50 +27,50 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeInterestPopup();
 });
 
-// ── BOOKS ─────────────────────────────────────────────────
+// â”€â”€ BOOKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const BOOKS = [
   {
     title: 'The Design of Everyday Things',
     author: 'Don Norman', year: '1988',
-    desc: 'A masterclass in how design shapes human interaction. Norman explains why some products frustrate and others delight — through concepts like affordances, signifiers, and feedback loops. This book permanently changed how I see every object I interact with.'
+    desc: 'A masterclass in how design shapes human interaction. Norman explains why some products frustrate and others delight â€” through concepts like affordances, signifiers, and feedback loops. This book permanently changed how I see every object I interact with.'
   },
   {
     title: "Don't Make Me Think",
     author: 'Steve Krug', year: '2000',
-    desc: 'The bible of web usability. Krug argues great design is self-evident — users shouldn\'t have to think. Packed with practical examples on navigation, layout, and the value of user testing. A fast read with lifelong impact.'
+    desc: 'The bible of web usability. Krug argues great design is self-evident â€” users shouldn\'t have to think. Packed with practical examples on navigation, layout, and the value of user testing. A fast read with lifelong impact.'
   },
   {
     title: 'Thinking, Fast and Slow',
     author: 'Daniel Kahneman', year: '2011',
-    desc: 'Kahneman reveals two systems of thought: fast, intuitive System 1 and slow, deliberate System 2. Understanding these helps designers create products that align with how people actually make decisions — not how we assume they do.'
+    desc: 'Kahneman reveals two systems of thought: fast, intuitive System 1 and slow, deliberate System 2. Understanding these helps designers create products that align with how people actually make decisions â€” not how we assume they do.'
   },
   {
     title: 'Hooked',
     author: 'Nir Eyal', year: '2014',
-    desc: 'A framework for building habit-forming products using the Hook Model: Trigger → Action → Variable Reward → Investment. Eye-opening for understanding why certain apps are impossible to put down, and how to design that ethically.'
+    desc: 'A framework for building habit-forming products using the Hook Model: Trigger â†’ Action â†’ Variable Reward â†’ Investment. Eye-opening for understanding why certain apps are impossible to put down, and how to design that ethically.'
   },
   {
     title: 'Sprint',
     author: 'Jake Knapp', year: '2016',
-    desc: 'Google Ventures\' method for solving design challenges in 5 days — from mapping the problem on Monday to user testing on Friday. I\'ve applied the sprint framework on real projects and it consistently cuts through overthinking.'
+    desc: 'Google Ventures\' method for solving design challenges in 5 days â€” from mapping the problem on Monday to user testing on Friday. I\'ve applied the sprint framework on real projects and it consistently cuts through overthinking.'
   },
   {
     title: 'Creative Confidence',
     author: 'Tom & David Kelley', year: '2013',
-    desc: 'The IDEO founders argue creativity isn\'t a gift — it\'s a skill anyone can build. Through stories of people who found their creative voice, they show how to overcome fear of judgment and learn to prototype boldly.'
+    desc: 'The IDEO founders argue creativity isn\'t a gift â€” it\'s a skill anyone can build. Through stories of people who found their creative voice, they show how to overcome fear of judgment and learn to prototype boldly.'
   }
 ];
 
 function showBook(idx) {
   const b = BOOKS[idx];
   document.getElementById('book-title').textContent  = b.title;
-  document.getElementById('book-author').textContent = b.author + ' · ' + b.year;
+  document.getElementById('book-author').textContent = b.author + ' Â· ' + b.year;
   document.getElementById('book-desc').textContent   = b.desc;
   document.querySelectorAll('.book-item').forEach((el, i) =>
     el.classList.toggle('active', i === idx));
 }
 
-// ── MOVIES (TV MODULE ON-CARD) ────────────────────────────
+// â”€â”€ MOVIES (TV MODULE ON-CARD) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const TV_GIFS = [
   'Media/Gifs/Ingloriesbasters.gif',
   'Media/Gifs/distort-distorted.gif',
@@ -134,7 +134,7 @@ window.nextTvGif = function() {
 updateTvScreen();
 startTvTimer();
 
-// ── MUSIC (IPOD ON-CARD) ──────────────────────────────────
+// â”€â”€ MUSIC (IPOD ON-CARD) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let ipodMenuOpen = false;
 let spotifyController = null;
 let isPlaying = false;
@@ -159,7 +159,7 @@ function renderIpodScreen() {
     const list = document.getElementById('ipod-menu-list');
     list.innerHTML = IPOD_SONGS.map((s, i) => `
       <div style="font-size:8px; padding:3px 2px; color:${i === fakeIndex ? '#fa7a30' : '#444'}; font-weight:${i === fakeIndex ? 'bold' : 'normal'}; cursor:pointer;" onclick="selectIpodSong(${i})">
-        ${i === fakeIndex && isPlaying ? '▶ ' : ''}${s.title}
+        ${i === fakeIndex && isPlaying ? 'â–¶ ' : ''}${s.title}
       </div>
     `).join('');
   } else {
@@ -249,7 +249,27 @@ if (!document.getElementById('spotify-api-script')) {
 
 renderIpodScreen();
 
-// ── Expose popup openers globally ─────────────────────────
+// â”€â”€ Expose popup openers globally â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 window.openInterestPopup  = openInterestPopup;
 window.closeInterestPopup = closeInterestPopup;
 window.showBook           = showBook;
+
+// ── GAMES TAB SWITCHER ─────────────────────────────────────
+window.switchGameTab = function(tab) {
+  const playTab = document.getElementById('games-tab-play');
+  const favTab = document.getElementById('games-tab-fav');
+  const btnPlay = document.getElementById('btn-tab-play');
+  const btnFav = document.getElementById('btn-tab-fav');
+
+  if(tab === 'play') {
+    playTab.classList.add('active');
+    favTab.classList.remove('active');
+    btnPlay.classList.add('active');
+    btnFav.classList.remove('active');
+  } else {
+    playTab.classList.remove('active');
+    favTab.classList.add('active');
+    btnPlay.classList.remove('active');
+    btnFav.classList.add('active');
+  }
+};
