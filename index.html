@@ -2845,7 +2845,7 @@
                     ease: "power2.inOut",
                     onUpdate: () => {
                         const val = Math.floor(counterObj.value);
-                        if (counterElement) counterElement.textContent = val;
+                        if (counterElement) counterElement.textContent = val + '%';
                         if (progressBar) progressBar.style.width = val + '%';
                     },
                     onComplete: () => {
