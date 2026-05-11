@@ -2032,7 +2032,7 @@
                         position: sticky;
                         top: 50%;
                         transform: translateY(-50%);
-                        z-index: 1;
+                        z-index: 6;
                         pointer-events: none;
                         overflow: hidden;
                         white-space: nowrap;
@@ -2103,8 +2103,6 @@
                         flex-direction: column;
                         gap: 16px;
                         transition: border-color 0.3s ease;
-                        position: relative;
-                        z-index: 10000;
                     }
 
                     .t-card-v2:hover {
@@ -2942,7 +2940,7 @@
             stagger('.exp-row',         'up', 0.08);
             fadeUp(document.querySelector('.philosophy__card'));
             stagger('.phil-btn',        'in', 0.10);
-            stagger('.t-card-v2',       'up', 0.10);
+            // testimonial cards: no fade animation — always fully visible
             stagger('.int-module',      'up', 0.08);
             stagger('details',          'up', 0.07);
             stagger('.footer__tagline, .footer__cta-group, .footer__email-display, .footer__socials, .footer__copy', 'up', 0.08);
