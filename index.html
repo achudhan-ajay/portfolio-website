@@ -17,20 +17,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
     <style>
-        /* ── BACKGROUND GRID PARALLAX ───────────────────── */
-        #bg-grid {
+        /* ── BACKGROUND GRID ─────────────────────── */
+        body::before {
+            content: '';
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            overflow: hidden;
-            /* 8-column vertical lines + horizontal lines every ~120px */
             background-image:
-                linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 12.5% 120px;
+            background-size: 12.5% 140px;
             will-change: transform;
-            transition: transform 0.1s linear;
         }
         /* =====================================================================
        DESIGN TOKENS  ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â extracted directly from Figma JSON
@@ -1635,8 +1633,6 @@
 </head>
 
 <body>
-    <!-- Background parallax grid -->
-    <div id="bg-grid" aria-hidden="true"></div>
     <!-- Loader Section -->
     <div id="loader">
         <div id="counter">0</div>
@@ -2888,23 +2884,6 @@
                 });
             }
             
-            // Parallax grid on scroll
-            (function() {
-                const grid = document.getElementById('bg-grid');
-                if (!grid) return;
-                let ticking = false;
-                window.addEventListener('scroll', function() {
-                    if (!ticking) {
-                        requestAnimationFrame(function() {
-                            const scrollY = window.scrollY;
-                            grid.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                }, { passive: true });
-            })();
-
             window.addEventListener('load', () => {
                 startLoader();
             });
