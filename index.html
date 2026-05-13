@@ -937,19 +937,19 @@
         .skills-wrapper {
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 100%;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
             padding: 2rem 0;
-            gap: 40px;
         }
 
         .skills-labels {
             display: flex;
             flex-direction: column;
+            gap: 1.2rem;
             flex: 1;
             min-width: 0;
-            /* gap: 2.5rem; Removed to fix hover glitch */
         }
 
         /* Fade out all items when ANY skill item is hovered, EXCEPT the one being hovered */
@@ -963,10 +963,22 @@
             align-items: flex-end;
         }
 
+        /* Curved arc: middle items push further from face, top/bottom stay closer */
+        .skills-labels.left .skill-item:nth-child(1) { padding-right: 0.5rem; }
+        .skills-labels.left .skill-item:nth-child(2) { padding-right: 2.5rem; }
+        .skills-labels.left .skill-item:nth-child(3) { padding-right: 3.5rem; }
+        .skills-labels.left .skill-item:nth-child(4) { padding-right: 1.5rem; }
+
         .skills-labels.right {
             text-align: left;
             align-items: flex-start;
         }
+
+        /* Mirror of left arc */
+        .skills-labels.right .skill-item:nth-child(1) { padding-left: 0.5rem; }
+        .skills-labels.right .skill-item:nth-child(2) { padding-left: 2.5rem; }
+        .skills-labels.right .skill-item:nth-child(3) { padding-left: 3.5rem; }
+        .skills-labels.right .skill-item:nth-child(4) { padding-left: 1.5rem; }
 
         .skill-item {
             position: relative;
@@ -1049,10 +1061,11 @@
         }
 
         .interactive-face-container {
-            width: 420px;
-            flex-shrink: 0;
+            width: 70%;
+            max-width: 800px;
             position: relative;
             display: block;
+            margin: 0 auto;
         }
 
         .face-mask {
