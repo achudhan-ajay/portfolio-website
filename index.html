@@ -15,6 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Chivo+Mono:wght@300;400;500&family=Roboto+Mono:wght@300;400;500&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
 
     <style>
         /* ── BACKGROUND GRID OVERLAY ────────────── */
@@ -936,17 +937,25 @@
         .skills-wrapper {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            max-width: 900px;
-            margin: 0 auto;
+            justify-content: center;
+            width: 100%;
             position: relative;
             padding: 2rem 0;
+            gap: 40px;
         }
 
         .skills-labels {
             display: flex;
             flex-direction: column;
-            gap: 2.5rem;
+            flex: 1;
+            min-width: 0;
+            /* gap: 2.5rem; Removed to fix hover glitch */
+        }
+
+        /* Fade out all items when ANY skill item is hovered, EXCEPT the one being hovered */
+        .skills-wrapper:has(.skill-item:hover) .skill-item:not(:hover) {
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
         }
 
         .skills-labels.left {
@@ -959,21 +968,59 @@
             align-items: flex-start;
         }
 
-        .skills-labels span {
-            font-family: var(--f-body);
-            font-size: 16px;
+        .skill-item {
+            position: relative;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            padding: 1.25rem 0; /* Creates contiguous hover areas to stop glitching */
+            /* Container for title and description */
+        }
+
+        .skill-title {
+            font-family: 'Gochi Hand', cursive;
+            font-size: 28px;
             font-weight: 500;
             color: var(--text);
             position: relative;
             white-space: nowrap;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
-        .skills-labels span.active-label {
-            display: inline-block;
+        /* The rough notation circle applies on hover, we just need padding/transform for layout */
+        .skill-item:hover .skill-title {
             padding: 8px 24px;
-            border: 1px solid #e58d6f;
-            border-radius: 50px;
             transform: rotate(-3deg);
+        }
+
+        .skill-desc {
+            font-family: 'Gochi Hand', cursive;
+            font-size: 18px;
+            color: #e58d6f; /* Changed to match hand-drawn circle color */
+            position: absolute;
+
+            top: 100%;
+            width: 250px;
+            margin-top: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            line-height: 1.4;
+        }
+
+        .skills-labels.left .skill-desc {
+            right: 0;
+            text-align: right;
+        }
+
+        .skills-labels.right .skill-desc {
+            left: 0;
+            text-align: left;
+        }
+
+        /* Show description on hover */
+        .skill-item:hover .skill-desc {
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -987,14 +1034,25 @@
                 text-align: center;
                 align-items: center;
             }
+            
+            .skills-labels.left .skill-desc,
+            .skills-labels.right .skill-desc {
+                position: relative;
+                width: auto;
+                max-width: 300px;
+                text-align: center;
+                margin: 10px auto 0;
+                top: auto;
+                left: auto;
+                right: auto;
+            }
         }
 
         .interactive-face-container {
-            width: 70%;
-            max-width: 800px;
+            width: 420px;
+            flex-shrink: 0;
             position: relative;
             display: block;
-            margin: 0 auto;
         }
 
         .face-mask {
@@ -1067,8 +1125,8 @@
             top: 10px;
             left: 25px;
             /* Centered in 65px width */
-            width: 15px;
-            height: 15px;
+            width: 17px;
+            height: 17px;
             background: #000;
             border-radius: 50%;
             content: " ";
@@ -2073,10 +2131,22 @@
                 <h2 class="section__title">What I Do?</h2>
                 <div class="skills-wrapper">
                     <div class="skills-labels left">
-                        <span>Product Design</span>
-                        <span>Prototyping</span>
-                        <span>Multimodal Design</span>
-                        <span>Vibe Code</span>
+                        <div class="skill-item">
+                            <span class="skill-title">Product Design</span>
+                            <p class="skill-desc">The holistic process of imagining, creating, and iterating products that solve users' problems.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">Prototyping</span>
+                            <p class="skill-desc">Creating interactive models of a product to validate ideas and gather user feedback.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">Multimodal Design</span>
+                            <p class="skill-desc">Designing experiences that use multiple modes of interaction, like voice and touch.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">Vibe Code</span>
+                            <p class="skill-desc">Translating emotional and aesthetic 'vibes' into front-end code for immersive experiences.</p>
+                        </div>
                     </div>
                     <div class="interactive-face-container" data-cursor="Tools Cluster: Figma, Notion, etc.">
                         <!-- Layer 2: Face Mask (Top Layer) -->
@@ -2095,10 +2165,22 @@
                         </section>
                     </div>
                     <div class="skills-labels right">
-                        <span>UX Strategy</span>
-                        <span>User Research</span>
-                        <span class="active-label">Spatial Design</span>
-                        <span>Visual Design</span>
+                        <div class="skill-item">
+                            <span class="skill-title">UX Strategy</span>
+                            <p class="skill-desc">A UX strategy is a detailed plan that aligns a company's brand identity with the desired user experience at every customer touchpoint.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">User Research</span>
+                            <p class="skill-desc">Gathering qualitative and quantitative insights to deeply understand user behaviors and needs.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">Spatial Design</span>
+                            <p class="skill-desc">Crafting three-dimensional, immersive interfaces for AR/VR environments.</p>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-title">Visual Design</span>
+                            <p class="skill-desc">Focusing on the aesthetics of a site by strategically implementing images, colors, and typography.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -4151,6 +4233,35 @@
                     '-moz-transform': 'rotate(' + rot + 'deg)',
                     '-ms-transform': 'rotate(' + rot + 'deg)',
                     'transform': 'rotate(' + rot + 'deg)'
+                });
+            });
+        </script>
+        <script type="module">
+            import { annotate } from 'https://unpkg.com/rough-notation?module';
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const skills = document.querySelectorAll('.skill-item');
+                const annotationsMap = new Map();
+
+                skills.forEach(item => {
+                    const title = item.querySelector('.skill-title');
+                    // Create the annotation
+                    const annotation = annotate(title, { 
+                        type: 'circle', 
+                        color: '#e58d6f', 
+                        padding: [5, 15], 
+                        strokeWidth: 2,
+                        animationDuration: 400 
+                    });
+                    annotationsMap.set(item, annotation);
+
+                    // Show on hover, hide on leave
+                    item.addEventListener('mouseenter', () => {
+                        annotation.show();
+                    });
+                    item.addEventListener('mouseleave', () => {
+                        annotation.hide();
+                    });
                 });
             });
         </script>
