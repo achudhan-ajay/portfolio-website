@@ -302,3 +302,91 @@
     onScroll(); // initialise on load
 })();
 
+/* ── About Me Carousel (GSAP 3D Cylinder) ── */
+(function() {
+    const dragger = document.getElementById('dragger');
+    const ring = document.getElementById('ring');
+    let imgs = document.querySelectorAll('.img-3d');
+    if (!dragger || !ring || imgs.length === 0) return;
+
+    // Clone images to double the count (22 total) for a wider, full-screen carousel
+    imgs.forEach(img => {
+        const clone = img.cloneNode(true);
+        ring.appendChild(clone);
+    });
+
+    imgs = document.querySelectorAll('.img-3d');
+    const numImgs = imgs.length; 
+    const angle = 360 / numImgs;
+
+    // Radius for the cylinder - mathematically scaled for 22 images
+    // 22 images * 320px width = 7040px circumference. R = 7040 / 2*PI ≈ 1120px
+    // Using 1150px gives a beautiful slight gap and spreads it across ultrawide monitors
+    const radius = 1150; 
+
+    // Apply transform rotations to each image
+    imgs.forEach((img, i) => {
+        gsap.set(img, {
+            rotateY: i * -angle,
+            transformOrigin: `50% 50% ${radius}px`,
+            z: -radius,
+            backfaceVisibility: 'hidden'
+        });
+    });
+
+    // Start rotation value
+    let currentRotation = 180;
+
+    gsap.timeline()
+        .set(dragger, { opacity: 0 }) 
+        .set(ring, { rotationY: currentRotation }) 
+        .from('.img-3d', {
+            duration: 1.5,
+            y: 200,
+            opacity: 0,
+            stagger: 0.05,
+            ease: 'expo'
+        });
+
+    let isDragging = false;
+    let autoScrollSpeed = 0.08; // Auto-scroll speed
+    let startX = 0;
+    let lastX = 0;
+
+    // Auto-scroll loop
+    function autoScroll() {
+        if (!isDragging) {
+            currentRotation -= autoScrollSpeed;
+            gsap.set(ring, { rotationY: currentRotation });
+        }
+        requestAnimationFrame(autoScroll);
+    }
+    requestAnimationFrame(autoScroll);
+
+    // Use the full carousel container as the drag surface
+    const carouselContainer = document.querySelector('.about-carousel-container');
+    if (!carouselContainer) return;
+
+    carouselContainer.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        lastX = e.clientX;
+        carouselContainer.setPointerCapture(e.pointerId);
+        carouselContainer.style.cursor = 'grabbing';
+    });
+
+    carouselContainer.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const delta = e.clientX - lastX;
+        currentRotation += delta * 0.25; // sensitivity
+        gsap.set(ring, { rotationY: currentRotation });
+        lastX = e.clientX;
+    });
+
+    const stopDrag = () => {
+        isDragging = false;
+        carouselContainer.style.cursor = 'grab';
+    };
+    carouselContainer.addEventListener('pointerup', stopDrag);
+    carouselContainer.addEventListener('pointercancel', stopDrag);
+})();
