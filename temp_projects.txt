@@ -1,0 +1,66 @@
+﻿                <div class="projects__bento">
+                    <div class="project-wrap span-4">
+                        <a href="#" class="project-card"><img src="Media/Octopos - PD.png" alt="Octopos PD"></a>
+                        <div class="project-label"><span>Octopos</span><span>//PRODUCT DESIGN</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Octopos - BI.png" alt="Octopos BI"></a>
+                        <div class="project-label"><span>Octopos</span><span>//BRAND IDENTITY</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Vertex.png" alt="Vertex"></a>
+                        <div class="project-label"><span>Vertex</span><span>//MOBILE APP</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card">
+                            <img src="Media/Agaram.webp" alt="Agaram Brand Identity"
+                                style="width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block;">
+                        </a>
+                        <div class="project-label"><span>Agaram</span><span>//BRAND IDENTITY</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/FISHLY.png" alt="Fishly"></a>
+                        <div class="project-label"><span>Fishly</span><span>//MOBILE APP</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Twipe-Thumbnail-Image.png.png" alt="Twipe"></a>
+                        <div class="project-label"><span>Twipe</span><span>//CASE STUDY</span></div>
+                    </div>
+                    <div class="project-wrap span-4">
+                        <a href="#" class="project-card"><img src="Media/Vision Air x Siri.png"
+                                alt="Vision Air x Siri"></a>
+                        <div class="project-label"><span>Vision Air x Siri</span><span>//CASE STUDY</span></div>
+                    </div>
+
+                    <div class="project-wrap span-3">
+                        <a href="#" class="project-card">
+                            <video src="Media/Zyke Store.mp4" autoplay loop muted playsinline
+                                style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;"></video>
+                        </a>
+                        <div class="project-label"><span>Zkye Store</span><span>//WEBSITE</span></div>
+                    </div>
+                    <div class="project-wrap span-3">
+                        <a href="#" class="project-card"><img src="Media/Darwin Groups-Thumbnail-Image.png.png"
+                                alt="Darwin Groups"></a>
+                        <div class="project-label"><span>Darwin Groups</span><span>//ADMIN DASH...</span></div>
+                    </div>
+
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Germs Scan-Thumbnail-Image.png.png"
+                                alt="Germs Scan"></a>
+                        <div class="project-label"><span>Germs Scan</span><span>//MOBILE APP</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Bonbons-Thumbnail-Image.png.png"
+                                alt="Bonbons"></a>
+                        <div class="project-label"><span>Bonbons</span><span>WEB DESIGN</span></div>
+                    </div>
+                    <div class="project-wrap">
+                        <a href="#" class="project-card"><img src="Media/Anchor-Thumbnail-Image.png.png"
+                                alt="Anchor"></a>
+                        <div class="project-label"><span>Anchor</span><span>WEB DESIGN</span></div>
+                    </div>
+                </div>
+            </section>
